@@ -1,0 +1,27 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Проверка модели</title>
+<p>Сверка JavaScript-модели с эталоном algorithm/model.py (Python).</p>
+<pre id="out">считаю…</pre>
+<script type="module">
+  import { Model, DEFAULT_CONFIG, STRATEGIES } from "./js/model.js";
+  // эталон — algorithm/model.py (точное решение и Монте-Карло 20 000 дней)
+  const PY = { team_fifo: 89292, solo6_fifo: 109972, team_prio: 61990, solo6_prio: 102457, split_fifo: 96156, adaptive: 61990 };
+  const m = new Model(DEFAULT_CONFIG);
+  const t0 = performance.now();
+  const res = await m.runAll(10000, 2026);
+  const lines = [];
+  let ok = true;
+  for (const s of STRATEGIES) {
+    const r = res.results[s.key];
+    const js = r.exact ? r.exact.lossMean : r.sim.lossMean;
+    const tol = r.exact ? 1 : 3 * r.sim.lossCI + 300;
+    const pass = Math.abs(js - PY[s.key]) <= tol;
+    ok &&= pass;
+    lines.push(`${pass ? "OK  " : "FAIL"} ${s.key.padEnd(11)} JS=${js.toFixed(0)} PY=${PY[s.key]}  MC=${r.sim.lossMean.toFixed(0)}±${r.sim.lossCI.toFixed(0)}`);
+  }
+  lines.push(`delta=${res.main.delta.toFixed(0)} руб/день, fire=${res.main.fire}, ${(performance.now() - t0).toFixed(0)} мс`);
+  lines.push(ok ? "ALL OK" : "MISMATCH");
+  document.getElementById("out").textContent = lines.join("\n");
+  window.__done = lines.join("\n");
+</script>

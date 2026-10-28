@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Слесарь в AR</title>
+  <meta name="description" content="AR-стройплощадка: экономическая целесообразность увольнения слесаря 3-го разряда (имитационное моделирование и уравнения Колмогорова)">
+  <meta name="theme-color" content="#ffb703">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="stage"></div>
+
+  <!-- стартовый экран -->
+  <section id="start" class="screen">
+    <div class="start-card">
+      <div class="badge">Системотехника строительства</div>
+      <h1>Слесарь 3-го&nbsp;разряда:<br><span>уволить или нет?</span></h1>
+      <p class="lead">Живая стройплощадка: 20 машин ломаются, слесари их чинят, а модель считает каждый рубль. Наведите камеру на схему — и площадка вырастет прямо на столе.</p>
+      <div class="start-buttons">
+        <button class="toy big yellow" id="btn-ar"><span class="ico">📷</span> AR — на схеме</button>
+        <button class="toy big blue" id="btn-3d"><span class="ico">🧊</span> 3D без камеры</button>
+      </div>
+      <div class="start-links">
+        <a href="assets/marker-print.pdf" target="_blank" rel="noopener">🖨 Схема для печати (PDF)</a>
+        <a href="assets/marker.png" target="_blank" rel="noopener">🖼 Схема картинкой</a>
+      </div>
+      <p class="fine">Для AR нужен доступ к камере. Распечатайте схему на матовой бумаге А4 или откройте её на другом экране. Если камера не запускается — выберите 3D-режим.</p>
+    </div>
+  </section>
+
+  <!-- подсказка сканирования -->
+  <div id="scan" class="hidden">
+    <div class="scan-frame"><i></i><i></i><i></i><i></i></div>
+    <p>Наведите камеру на схему стройплощадки</p>
+  </div>
+
+  <!-- табло -->
+  <header id="hud" class="hidden">
+    <div class="clock"><b id="hud-day">День 1</b><span id="hud-time">08:00</span></div>
+    <div id="hud-money" class="money"></div>
+  </header>
+
+  <!-- нижняя панель -->
+  <nav id="bar" class="hidden">
+    <button class="toy round" id="btn-pause" title="Пауза">⏸</button>
+    <button class="toy round" id="btn-speed" title="Скорость">×1</button>
+    <div class="seg" id="mode">
+      <button data-mode="team" class="on">Бригада 6+3</button>
+      <button data-mode="solo">Уволить 3-го</button>
+      <button data-mode="both">Два мира</button>
+    </div>
+    <button class="toy round" id="btn-data" title="Исходные данные">⚙</button>
+    <button class="toy yellow" id="btn-verdict">⚖ Вердикт</button>
+    <button class="toy round" id="btn-home" title="В меню">⌂</button>
+  </nav>
+
+  <!-- панель исходных данных -->
+  <section id="panel-data" class="panel hidden">
+    <div class="panel-card">
+      <header><h2>⚙ Исходные данные</h2><button class="x" data-close>✕</button></header>
+      <div class="scroll">
+        <p class="hint">Пустое время ремонта — этот исполнитель такую машину не чинит. Время — в часах, деньги — в рублях в час.</p>
+        <div class="table-wrap">
+          <table class="form-table" id="machines-table">
+            <thead><tr><th>Тип</th><th>Вид</th><th>Шт.</th><th>Наработка, ч</th><th>Доход, ₽/ч</th><th>Ремонт 3-м</th><th>Ремонт 6-м</th><th>Ремонт вдвоём</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <button class="toy small" id="btn-add-type">＋ Тип машин</button>
+        <div class="grid-form" id="general-form"></div>
+        <label class="row-check">Очередь на ремонт:
+          <select id="discipline">
+            <option value="fifo">по порядку поломок (FIFO)</option>
+            <option value="priority">сначала самые «дорогие» (правило cμ)</option>
+          </select>
+        </label>
+        <p id="data-error" class="error"></p>
+      </div>
+      <footer>
+        <button class="toy" id="btn-reset">↺ Данные задания</button>
+        <button class="toy yellow" id="btn-apply">✓ Применить</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- панель вердикта -->
+  <section id="panel-verdict" class="panel hidden">
+    <div class="panel-card wide">
+      <header><h2>⚖ Вердикт модели</h2><button class="x" data-close>✕</button></header>
+      <div class="scroll" id="verdict-body"></div>
+    </div>
+  </section>
+
+  <div id="toast"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -288,14 +288,14 @@ function renderDataForm() {
     const opt = Object.entries(KIND_NAMES).map(([k, n]) => `<option value="${k}" ${m.kind === k ? "selected" : ""}>${n}</option>`).join("");
     const val = (v) => (v == null ? "" : v);
     tr.innerHTML = `
-      <td><input data-f="name" value="${val(m.name).replace(/"/g, "&quot;")}"></td>
-      <td><select data-f="kind">${opt}</select></td>
-      <td><input data-f="count" type="number" min="0" step="1" value="${val(m.count)}"></td>
-      <td><input data-f="mtbf" type="number" min="0" step="0.1" value="${val(m.mtbf)}"></td>
-      <td><input data-f="income" type="number" min="0" step="10" value="${val(m.income)}"></td>
-      <td><input data-f="repair_3" type="number" min="0" step="0.05" value="${val(m.repair_3)}" placeholder="—"></td>
-      <td><input data-f="repair_6" type="number" min="0" step="0.05" value="${val(m.repair_6)}"></td>
-      <td><input data-f="repair_both" type="number" min="0" step="0.05" value="${val(m.repair_both)}"></td>
+      <td data-label="Название"><input data-f="name" value="${val(m.name).replace(/"/g, "&quot;")}"></td>
+      <td data-label="Вид на площадке"><select data-f="kind">${opt}</select></td>
+      <td data-label="Количество, шт."><input data-f="count" type="number" inputmode="numeric" min="0" step="1" value="${val(m.count)}"></td>
+      <td data-label="Наработка, ч"><input data-f="mtbf" type="number" inputmode="decimal" min="0" step="0.1" value="${val(m.mtbf)}"></td>
+      <td data-label="Доход, ₽/ч"><input data-f="income" type="number" inputmode="decimal" min="0" step="10" value="${val(m.income)}"></td>
+      <td data-label="Ремонт 3-м, ч"><input data-f="repair_3" type="number" inputmode="decimal" min="0" step="0.05" value="${val(m.repair_3)}" placeholder="не чинит"></td>
+      <td data-label="Ремонт 6-м, ч"><input data-f="repair_6" type="number" inputmode="decimal" min="0" step="0.05" value="${val(m.repair_6)}"></td>
+      <td data-label="Ремонт вдвоём, ч"><input data-f="repair_both" type="number" inputmode="decimal" min="0" step="0.05" value="${val(m.repair_both)}"></td>
       <td><button class="del" title="Удалить">✕</button></td>`;
     tr.querySelectorAll("[data-f]").forEach((el) => el.addEventListener("input", () => {
       const f = el.dataset.f;
@@ -305,7 +305,7 @@ function renderDataForm() {
     tr.querySelector(".del").onclick = () => { draft.machines.splice(i, 1); renderDataForm(); };
     tb.appendChild(tr);
   });
-  $("#general-form").innerHTML = GENERAL.map(([k, l]) => `<label>${l}<input data-g="${k}" type="number" min="0" value="${draft[k]}"></label>`).join("");
+  $("#general-form").innerHTML = GENERAL.map(([k, l]) => `<label>${l}<input data-g="${k}" type="number" inputmode="decimal" min="0" value="${draft[k]}"></label>`).join("");
   document.querySelectorAll("[data-g]").forEach((el) => el.addEventListener("input", () => (draft[el.dataset.g] = Number(el.value))));
 }
 $("#btn-add-type").onclick = () => {
@@ -360,7 +360,8 @@ function verdictHTML(res) {
     const idle = (r.exact ? r.exact.idle : r.sim.idle).reduce((a, b) => a + b, 0);
     const method = r.exact ? `точно (Колмогоров); МК ${rub(r.sim.lossMean)} ± ${num(r.sim.lossCI, 0)}` : `Монте-Карло ± ${num(r.sim.lossCI, 0)} ₽`;
     return `<tr class="${r === best ? "best" : ""}"><td>${s.title}<span class="method">${method}</span></td>
-      <td>${num(idle)}</td><td>${rub(r.econ.lost)}</td><td>${rub(r.econ.staff)}</td><td><b>${rub(r.econ.result)}</b></td></tr>`;
+      <td data-label="Простой, маш·ч/день">${num(idle)}</td><td data-label="Убыток от простоя">${rub(r.econ.lost)}</td>
+      <td data-label="Слесари + накладные">${rub(r.econ.staff)}</td><td data-label="Итог за день"><b>${rub(r.econ.result)}</b></td></tr>`;
   }).join("");
   return `
     <div class="verdict-hero ${v.fire ? "fire" : ""}">

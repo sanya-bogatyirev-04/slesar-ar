@@ -185,9 +185,11 @@ h1 span { color: var(--yellow-d); }
   position: fixed; inset: 0; z-index: 30;
   background: rgba(20, 24, 36, 0.45);
   display: grid; place-items: center; padding: 16px;
+  grid-template-columns: minmax(0, 1fr);
   backdrop-filter: blur(3px);
 }
 .panel-card {
+  min-width: 0; justify-self: center;
   background: var(--card); border-radius: 26px; width: min(820px, 100%);
   max-height: calc(100dvh - 32px); display: flex; flex-direction: column;
   box-shadow: var(--shadow), 0 8px 0 var(--line);
@@ -205,7 +207,7 @@ h1 span { color: var(--yellow-d); }
 .form-table { border-collapse: separate; border-spacing: 4px; min-width: 760px; }
 .form-table th { font-size: 12px; color: var(--muted); font-weight: 600; text-align: left; padding: 0 4px; }
 .form-table input, .form-table select, .grid-form input, .row-check select {
-  font: 500 15px "Rubik", sans-serif; color: var(--ink);
+  font: 500 16px "Rubik", sans-serif; color: var(--ink);   /* 16px — иначе iPhone приближает страницу при вводе */
   width: 100%; padding: 9px 10px; border-radius: 12px;
   border: 2px solid var(--line); background: var(--paper);
 }
@@ -246,6 +248,50 @@ h1 span { color: var(--yellow-d); }
 .progress { height: 14px; background: var(--line); border-radius: 7px; overflow: hidden; margin: 18px 0 8px; }
 .progress i { display: block; height: 100%; background: var(--yellow); width: 0; transition: width 0.2s; }
 .notes { font-size: 13px; color: var(--muted); line-height: 1.45; }
+
+/* ---------- телефон: панели — листы снизу, таблицы — карточки ---------- */
+@media (max-width: 640px) {
+  .panel { padding: 0; place-items: end stretch; }
+  .panel-card, .panel-card.wide {
+    width: 100%; max-height: 92dvh;
+    border-radius: 24px 24px 0 0;
+    box-shadow: var(--shadow);
+  }
+  .panel-card header { padding: 14px 16px; }
+  .panel-card footer { padding: 12px 16px max(12px, env(safe-area-inset-bottom)); }
+  .panel-card footer .toy { flex: 1; }
+  .panel-card h2 { font-size: 20px; }
+  .scroll { padding: 0 16px 16px; }
+
+  .table-wrap { overflow: visible; }
+  .form-table, .res-table { min-width: 0; width: 100%; border-spacing: 0; }
+  .form-table thead, .res-table thead { display: none; }
+  .form-table, .form-table tbody, .res-table, .res-table tbody { display: block; }
+
+  .form-table tr {
+    position: relative;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    background: var(--paper); border-radius: 18px; padding: 12px; margin-bottom: 10px;
+  }
+  .form-table td { display: grid; gap: 4px; min-width: 0 !important; }
+  .form-table td::before { content: attr(data-label); font-size: 12px; color: var(--muted); font-weight: 600; }
+  .form-table td:nth-child(1) { grid-column: 1 / -1; padding-right: 40px; }
+  .form-table td:last-child { position: absolute; top: 8px; right: 6px; }
+  .form-table td:last-child::before { content: none; }
+  .form-table input, .form-table select { background: var(--card); }
+  .grid-form { grid-template-columns: 1fr 1fr; }
+
+  .res-table tr {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px;
+    background: var(--paper); border-radius: 16px; padding: 12px; margin-bottom: 8px;
+  }
+  .res-table tr.best td { background: none; }
+  .res-table tr.best { outline: 2px solid var(--green); }
+  .res-table td { display: grid; text-align: left !important; padding: 0; border: 0; white-space: normal; }
+  .res-table td::before { content: attr(data-label); font-size: 11px; color: var(--muted); font-weight: 600; }
+  .res-table td:first-child { grid-column: 1 / -1; font-weight: 600; }
+  .res-table td:first-child::before { content: none; }
+}
 .notes b { color: var(--ink); }
 
 #toast {

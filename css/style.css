@@ -305,3 +305,127 @@ h1 span { color: var(--yellow-d); }
 }
 #toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 #toast b { color: var(--yellow); }
+
+/* ---------- тумблер «Для опытных» ---------- */
+.switch {
+  display: grid; grid-template-columns: 52px 1fr; gap: 12px; align-items: center;
+  text-align: left; cursor: pointer; min-height: 44px; margin: 0 0 18px;
+  padding: 10px 12px; border-radius: 18px; background: var(--paper);
+}
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch i {
+  position: relative; width: 52px; height: 30px; border-radius: 15px;
+  background: var(--line); transition: background 0.2s;
+}
+.switch i::after {
+  content: ""; position: absolute; left: 3px; top: 3px; width: 24px; height: 24px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); transition: transform 0.2s;
+}
+.switch input:checked + i { background: #f2c200; }
+.switch input:checked + i::after { transform: translateX(22px); }
+.switch input:focus-visible + i { outline: 3px solid var(--blue); outline-offset: 2px; }
+.switch input:disabled + i { opacity: 0.5; }
+.switch b { display: block; font-size: 16px; font-weight: 800; }
+.switch small { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
+@media (prefers-reduced-motion: reduce) { .switch i, .switch i::after { transition: none; } }
+
+/* ---------- режим «Для опытных»: индустриальная тема ---------- */
+[data-edition="adult"] .screen {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(242, 194, 0, 0.18), transparent 40%),
+    #2a2c30;
+}
+[data-edition="adult"] .start-card {
+  position: relative; overflow: hidden;
+  background: #1f2226; color: #eceae4;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 8px 0 #111;
+  padding-top: 40px;
+}
+[data-edition="adult"] .start-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 14px;
+  background: repeating-linear-gradient(45deg, #f2c200 0 12px, #1a1a1a 12px 24px);
+}
+[data-edition="adult"] .start-card h1 span { color: #f2c200; }
+[data-edition="adult"] .start-card .badge, [data-edition="adult"] .start-card .switch { background: #2c3036; color: #b9bcc3; }
+[data-edition="adult"] .start-card .switch b { color: #f2c200; }
+[data-edition="adult"] .start-card .lead, [data-edition="adult"] .start-card .fine, [data-edition="adult"] .start-card .switch small { color: #a9adb5; }
+[data-edition="adult"] .start-card .start-links a { color: #f2c200; }
+.pro-tag {
+  display: none; align-self: flex-start; margin-top: 3px;
+  font: 800 11px/1 "Rubik", sans-serif; font-style: normal; letter-spacing: 0.06em;
+  color: #1a1a1a; background: #f2c200; padding: 3px 6px; border-radius: 6px;
+}
+[data-edition="adult"] .pro-tag { display: inline-block; }
+
+/* ---------- чип «чей голос слышен» (Два мира) ---------- */
+.voice-focus {
+  pointer-events: auto; align-self: flex-start;
+  font: 600 13px/1 "Rubik", sans-serif; color: var(--ink);
+  background: var(--card); border: 0; border-radius: 14px; padding: 9px 12px;
+  box-shadow: var(--shadow); cursor: pointer;
+}
+
+/* ---------- попап «Звук и версия» ---------- */
+#sound-pop {
+  position: fixed; right: 12px; z-index: 25;
+  bottom: calc(max(14px, env(safe-area-inset-bottom)) + 58px);
+  width: min(320px, 100vw - 24px); max-height: calc(100dvh - 140px); overflow-y: auto;
+  background: var(--card); border-radius: 22px; padding: 14px 16px;
+  box-shadow: var(--shadow), 0 6px 0 var(--line);
+  display: grid; gap: 10px;
+}
+#sound-pop h3 { margin: 0; font-size: 17px; font-weight: 800; }
+#sound-pop .wide { width: 100%; }
+#sound-pop .range { display: grid; gap: 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+#sound-pop input[type="range"] { width: 100%; accent-color: var(--yellow-d); }
+#sound-pop .check { display: flex; gap: 10px; align-items: center; font-weight: 600; font-size: 15px; min-height: 30px; }
+#sound-pop .check input { width: 20px; height: 20px; accent-color: var(--yellow-d); }
+#sound-pop hr { border: 0; border-top: 2px solid var(--line); margin: 2px 0; width: 100%; }
+#sound-pop .switch { margin: 0; }
+#sound-pop .credits { margin: 0; font-size: 12px; color: var(--muted); }
+#sound-pop .credits a { color: var(--blue); }
+@media (max-width: 640px) {
+  #sound-pop { bottom: calc(max(14px, env(safe-area-inset-bottom)) + 108px); }
+}
+
+/* ---------- пузыри-субтитры ---------- */
+#bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
+.bubble {
+  position: absolute; left: 0; top: 0; margin-top: -12px;
+  max-width: min(240px, 62vw); width: max-content;
+  padding: 8px 12px 9px; border-radius: 16px;
+  font: 600 14px/1.3 "Rubik", sans-serif;
+  opacity: 0; transition: opacity 0.18s;
+  will-change: transform;
+}
+.bubble.on { opacity: 1; }
+.bubble small { display: block; font-size: 11px; font-weight: 800; margin-bottom: 2px; letter-spacing: 0.02em; }
+.bubble span { display: block; }
+.bubble::after {
+  content: ""; position: absolute; left: 50%; bottom: -8px; margin-left: -8px;
+  border: 8px solid transparent; border-bottom: 0;
+}
+.bubble.pinned::after { display: none; }
+.bubble.pinned small::before { content: "📻 "; }
+/* обычная версия: белый комикс-пузырь */
+#bubbles:not([data-style="rough"]) .bubble { background: #fff; color: #1f2433; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); border: 2px solid #1f2433; }
+#bubbles:not([data-style="rough"]) .bubble::after { border-top-color: #1f2433; }
+#bubbles:not([data-style="rough"]) .bubble small { color: #6b7183; }
+#bubbles:not([data-style="rough"]) .bubble[data-who="w6"] small { color: #2b6cff; }
+#bubbles:not([data-style="rough"]) .bubble[data-who="w3"] small { color: #1fa65a; }
+#bubbles:not([data-style="rough"]) .bubble[data-who="foreman"] small { color: #d63a1a; }
+/* «Для опытных»: тёмная табличка с жёлтой кромкой */
+#bubbles[data-style="rough"] .bubble { background: #202327; color: #f4f2ec; border-left: 4px solid #f2c200; border-radius: 6px 14px 14px 6px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); }
+#bubbles[data-style="rough"] .bubble::after { border-top-color: #202327; }
+#bubbles[data-style="rough"] .bubble small { color: #f2c200; }
+
+/* ---------- узкий экран: «Вердикт» сжимается до ⚖ ---------- */
+@media (max-width: 400px) {
+  #btn-verdict .lbl { display: none; }
+  #btn-verdict { width: 42px; height: 42px; padding: 0; border-radius: 50%; font-size: 18px; }
+}
+
+#debug {
+  position: fixed; left: 8px; bottom: 120px; z-index: 50; margin: 0; pointer-events: none;
+  background: rgba(0, 0, 0, 0.7); color: #9f9; font: 11px/1.3 monospace; padding: 6px 8px; border-radius: 8px;
+}

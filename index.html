@@ -28,6 +28,11 @@
       <div class="badge">Системотехника строительства</div>
       <h1>Слесарь 3-го&nbsp;разряда:<br><span>уволить или нет?</span></h1>
       <p class="lead">Живая стройплощадка: 20 машин ломаются, слесари их чинят, а модель считает каждый рубль. Наведите камеру на схему — и площадка вырастет прямо на столе.</p>
+      <label class="switch" for="tgl-pro-start">
+        <input type="checkbox" id="tgl-pro-start" role="switch">
+        <i aria-hidden="true"></i>
+        <span><b>Для опытных</b><small>реалистичная техника, звуки стройки, характерные реплики</small></span>
+      </label>
       <div class="start-buttons">
         <button class="toy big yellow" id="btn-ar"><span class="ico">📷</span> AR — на схеме</button>
         <button class="toy big blue" id="btn-3d"><span class="ico">🧊</span> 3D без камеры</button>
@@ -48,8 +53,9 @@
 
   <!-- табло -->
   <header id="hud" class="hidden">
-    <div class="clock"><b id="hud-day">День 1</b><span id="hud-time">08:00</span></div>
+    <div class="clock"><b id="hud-day">День 1</b><span id="hud-time">08:00</span><em class="pro-tag" title="Режим «Для опытных»">PRO</em></div>
     <div id="hud-money" class="money"></div>
+    <button id="voice-focus" class="voice-focus hidden" type="button">🔊 Озвучка: без 3-го ⇄</button>
   </header>
 
   <!-- нижняя панель -->
@@ -62,9 +68,31 @@
       <button data-mode="both">Два мира</button>
     </div>
     <button class="toy round" id="btn-data" title="Исходные данные">⚙</button>
-    <button class="toy yellow" id="btn-verdict">⚖ Вердикт</button>
+    <button class="toy yellow" id="btn-verdict" title="Вердикт">⚖<span class="lbl"> Вердикт</span></button>
+    <button class="toy round" id="btn-sound" title="Звук и версия">🔊</button>
     <button class="toy round" id="btn-home" title="В меню">⌂</button>
   </nav>
+
+  <!-- попап «Звук и версия» -->
+  <div id="sound-pop" class="hidden" role="dialog" aria-label="Звук и версия">
+    <h3>Звук и версия</h3>
+    <button class="toy small wide" id="snd-mute" type="button">🔊 Звук включён</button>
+    <label class="range">Громкость <input type="range" id="vol" min="0" max="1" step="0.05"></label>
+    <label class="check"><input type="checkbox" id="snd-voices"> Голоса</label>
+    <label class="check"><input type="checkbox" id="snd-subs"> Субтитры</label>
+    <label class="check"><input type="checkbox" id="snd-amb"> Фон площадки</label>
+    <hr>
+    <label class="switch" for="tgl-pro-game">
+      <input type="checkbox" id="tgl-pro-game" role="switch">
+      <i aria-hidden="true"></i>
+      <span><b>Для опытных</b><small>реалистичная техника, звуки стройки, характерные реплики</small></span>
+    </label>
+    <button class="toy small wide" id="snd-test" type="button">▶ Проверить голоса</button>
+    <p class="credits">Звуки: <a href="assets/sfx/CREDITS.md" target="_blank" rel="noopener">Freesound.org (CC0)</a>. Голоса: Microsoft Pavel и Irina.</p>
+  </div>
+
+  <!-- пузыри-субтитры -->
+  <div id="bubbles"></div>
 
   <!-- панель исходных данных -->
   <section id="panel-data" class="panel hidden">

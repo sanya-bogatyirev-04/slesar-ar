@@ -9,12 +9,14 @@ export class World {
     this.rng = mulberry32(seed);
     this.history = [];
     this.day = 0;
+    this.onEvent = null;           // режиссёр звука и реплик: (ev, world) — на модель не влияет
     this.setStrategy(strategyKey);
   }
 
   setStrategy(key) {
     this.s = strategy(key);
     this.site.setWorkers(this.s.workers);
+    this.onEvent?.({ kind: "strategy", key }, this);
     this.startDay();
   }
 
@@ -29,7 +31,9 @@ export class World {
     this.craneWork = 0;
     this.queueLen = 0;
     this.finished = false;
+    this.brokeAt = new Map();      // «тип:номер» → время поломки (для реплик о долгом ожидании)
     this.site.resetDay();
+    this.onEvent?.({ kind: "day-start", day: this.day }, this);
   }
 
   rates() {
@@ -53,9 +57,10 @@ export class World {
   }
 
   apply(ev) {
-    if (ev.kind === "break") { this.broken[ev.type]++; this.site.onBreak(ev.type, ev.idx); }
-    else if (ev.kind === "fix") { this.broken[ev.type]--; this.site.onFix(ev.type, ev.idx); }
+    if (ev.kind === "break") { this.broken[ev.type]++; this.site.onBreak(ev.type, ev.idx); this.brokeAt.set(`${ev.type}:${ev.idx}`, { t: ev.t, told: false }); }
+    else if (ev.kind === "fix") { this.broken[ev.type]--; this.site.onFix(ev.type, ev.idx); this.brokeAt.delete(`${ev.type}:${ev.idx}`); }
     else if (ev.kind === "alloc") { this.site.assign(ev.jobs); this.queueLen = ev.broken.length; }
+    this.onEvent?.(ev, this);
   }
 
   // hours — на сколько часов модели продвинуться
@@ -74,9 +79,18 @@ export class World {
     const m = this.model;
     const nCranes = m.KINDS.reduce((a, k, t) => a + (k === "crane" ? m.COUNT[t] : 0), 0);
     this.site.setBuildingProgress(nCranes ? this.craneWork / (nCranes * DAY) : 0);
+    // долгое ожидание: машина стоит ≥ 1,5 ч модели — один раз на поломку
+    if (this.onEvent) for (const [key, b] of this.brokeAt) {
+      if (!b.told && this.t - b.t >= 1.5) {
+        b.told = true;
+        const [type, idx] = key.split(":").map(Number);
+        this.onEvent({ kind: "longwait", type, idx, waited: this.t - b.t }, this);
+      }
+    }
     if (this.t >= DAY) {
       this.finished = true;
       this.history.push(this.summary());
+      this.onEvent?.({ kind: "day-end", summary: this.history.at(-1) }, this);
     }
   }
 

@@ -1,0 +1,247 @@
+{
+  "roles": {
+    "w6": { "label": "Михалыч, 6 р.", "voice": "Pavel", "pitch": 0.88, "rate": 0.92, "web": { "pitch": 0.82, "rate": 0.93} },
+    "w3": { "label": "Серёга, 3 р.", "voice": "Pavel", "pitch": 1.18, "rate": 1.06, "web": { "pitch": 1.12, "rate": 1.08} },
+    "foreman": { "label": "Прораб", "voice": "Pavel", "pitch": 0.8, "rate": 0.95, "fx": "radio", "web": { "pitch": 0.75, "rate": 0.98} },
+    "op": { "label": "Машинист", "voice": "Pavel", "pitch": 1.0, "rate": 1.02, "web": { "pitch": 0.95, "rate": 1.04} },
+    "op.excavator": { "label": "Машинист экскаватора", "voice": "Pavel", "pitch": 1.0, "rate": 1.02, "web": { "pitch": 0.95, "rate": 1.05} },
+    "op.bulldozer": { "label": "Бульдозерист", "voice": "Pavel", "pitch": 0.92, "rate": 0.98, "web": { "pitch": 0.88, "rate": 1.0} },
+    "op.truck": { "label": "Водитель самосвала", "voice": "Pavel", "pitch": 1.06, "rate": 1.06, "web": { "pitch": 1.02, "rate": 1.1} },
+    "op.crane": { "label": "Крановщица Люба", "voice": "Irina", "pitch": 1.05, "rate": 1.02, "web": { "pitch": 1.1, "rate": 1.05} }
+  },
+  "classic": {
+    "break.excavator": [
+      { "id": "c-brk-exc-1", "who": "op.excavator", "t": "Ой-ой, ковш не слушается!" },
+      { "id": "c-brk-exc-2", "who": "op.excavator", "t": "Гидравлика потекла, встаю!" },
+      { "id": "c-brk-exc-3", "who": "op.excavator", "t": "Экскаватор встал. Слесаря сюда!" },
+      { "id": "c-brk-exc-4", "who": "op.excavator", "t": "Кажется, шланг лопнул. Помогите!" }
+    ],
+    "break.bulldozer": [
+      { "id": "c-brk-bul-1", "who": "op.bulldozer", "t": "Гусеница слетела!" },
+      { "id": "c-brk-bul-2", "who": "op.bulldozer", "t": "Мотор чихнул и заглох." },
+      { "id": "c-brk-bul-3", "who": "op.bulldozer", "t": "Отвал не поднимается, беда!" },
+      { "id": "c-brk-bul-4", "who": "op.bulldozer", "t": "Перегрелся, стрелка в красном!" }
+    ],
+    "break.crane": [
+      { "id": "c-brk-crn-1", "who": "op.crane", "t": "Стоп! Лебёдка не тянет!" },
+      { "id": "c-brk-crn-2", "who": "op.crane", "t": "Груз висит, кран не двигается!" },
+      { "id": "c-brk-crn-3", "who": "op.crane", "t": "Стрела не выдвигается, нужен слесарь." },
+      { "id": "c-brk-crn-4", "who": "op.crane", "t": "Кран стоит, а корпус ждёт!" }
+    ],
+    "break.truck": [
+      { "id": "c-brk-trk-1", "who": "op.truck", "t": "Колесо пробил! Стою на обочине." },
+      { "id": "c-brk-trk-2", "who": "op.truck", "t": "Кузов не поднимается!" },
+      { "id": "c-brk-trk-3", "who": "op.truck", "t": "Мотор заглох, не заводится." },
+      { "id": "c-brk-trk-4", "who": "op.truck", "t": "Самосвал встал, зовите слесаря." }
+    ],
+    "repair.start": [
+      { "id": "c-rep-start-1", "who": "w6", "t": "Иду, иду! Сейчас глянем." },
+      { "id": "c-rep-start-2", "who": "w6", "t": "Так, что тут у нас?" },
+      { "id": "c-rep-start-3", "who": "w6", "t": "Спокойно, сейчас починим." },
+      { "id": "c-rep-start-4", "who": "w3", "t": "Михалыч, я с тобой!" },
+      { "id": "c-rep-start-5", "who": "w3", "t": "Ключ на семнадцать — вот.", "s": "Ключ на семнадцать, вот." }
+    ],
+    "repair.done": [
+      { "id": "c-rep-done-1", "who": "w6", "t": "Готово! Заводи!" },
+      { "id": "c-rep-done-2", "who": "w6", "t": "Принимай машину!" },
+      { "id": "c-rep-done-3", "who": "w3", "t": "Как новенький!" }
+    ],
+    "fix.thanks": [
+      { "id": "c-thanks-1", "who": "op", "t": "Спасибо, мужики!" },
+      { "id": "c-thanks-2", "who": "op", "t": "Вот это скорость!" },
+      { "id": "c-thanks-3", "who": "op", "t": "Золотые руки!" }
+    ],
+    "fix.thanks.crane": [
+      { "id": "c-thanks-crn-1", "who": "op.crane", "t": "Спасибо, мальчики! Поехали!" }
+    ],
+    "wait.long": [
+      { "id": "c-wait-1", "who": "op", "t": "Ну где же слесарь?" },
+      { "id": "c-wait-2", "who": "op", "t": "Час уже стою, а время — деньги!", "s": "Час уже стою, а время, деньги!" },
+      { "id": "c-wait-3", "who": "op", "t": "Эй, про меня не забыли?" }
+    ],
+    "wait.long.crane": [
+      { "id": "c-wait-crn-1", "who": "op.crane", "t": "Мальчики, я всё ещё жду!" }
+    ],
+    "wait.over": [
+      { "id": "c-over-1", "who": "op", "t": "Наконец-то!" },
+      { "id": "c-over-2", "who": "op", "t": "Ура, мой черёд!" }
+    ],
+    "foreman.rant": [
+      { "id": "c-rant-1", "who": "foreman", "t": "Что-то много машин стоит!" },
+      { "id": "c-rant-2", "who": "foreman", "t": "Каждый час простоя — это рубли!", "s": "Каждый час простоя, это рубли!" },
+      { "id": "c-rant-3", "who": "foreman", "t": "Слесари, вы где? Очередь растёт!" }
+    ],
+    "solo.overload": [
+      { "id": "c-solo-1", "who": "w6", "t": "Я один, а машин двадцать!" },
+      { "id": "c-solo-2", "who": "w6", "t": "Эх, был бы напарник…" },
+      { "id": "c-solo-3", "who": "w6", "t": "Не разорваться же мне!" }
+    ],
+    "repair.switch": [
+      { "id": "c-switch-1", "who": "w6", "t": "Бросай, идём к крану!" }
+    ],
+    "shift.start": [
+      { "id": "c-shift-start-1", "who": "foreman", "t": "Доброе утро! За работу!" }
+    ],
+    "shift.end": [
+      { "id": "c-shift-end-1", "who": "foreman", "t": "Смена окончена, все молодцы!" }
+    ],
+    "edition.on": [
+      { "id": "c-edition-1", "who": "foreman", "t": "Так, работаем культурно." }
+    ],
+    "fire.boss": [
+      { "id": "c-fire-boss-1", "who": "foreman", "t": "Серёга, ты уволен. Экономим на зарплате." }
+    ],
+    "fire.r3_shock": [
+      { "id": "c-fire-shock-1", "who": "w3", "t": "Меня? Уволить?" }
+    ],
+    "fire.r6": [
+      { "id": "c-fire-r6-1", "who": "w6", "t": "Жаль. Без тебя будет тяжело." }
+    ],
+    "fire.r3_sad": [
+      { "id": "c-fire-sad-1", "who": "w3", "t": "Ну что ж, раз так решили…" }
+    ],
+    "fire.r3_bye": [
+      { "id": "c-fire-bye-1", "who": "w3", "t": "Михалыч, удачи! Береги ключи." }
+    ],
+    "fire.after": [
+      { "id": "c-fire-after-1", "who": "w6", "t": "Ну что ж, буду один." }
+    ],
+    "return.boss": [
+      { "id": "c-ret-boss-1", "who": "foreman", "t": "Серёга, возвращайся! Посчитали — без тебя дороже.", "s": "Серёга, возвращайся! Посчитали, без тебя дороже." }
+    ],
+    "return.r3_hello": [
+      { "id": "c-ret-hello-1", "who": "w3", "t": "Я вернулся! Скучали?" }
+    ],
+    "return.r6": [
+      { "id": "c-ret-r6-1", "who": "w6", "t": "Наконец-то! Бери ключ, работы много." }
+    ],
+    "return.r3_go": [
+      { "id": "c-ret-go-1", "who": "w3", "t": "За работу!" }
+    ],
+    "stay.r3": [
+      { "id": "c-stay-r3-1", "who": "w3", "t": "Ой, так я остаюсь?" }
+    ],
+    "stay.boss": [
+      { "id": "c-stay-boss-1", "who": "foreman", "t": "Остаёшься, остаёшься. Пошутили." }
+    ]
+  },
+  "adult": {
+    "break.excavator": [
+      { "id": "a-brk-exc-1", "who": "op.excavator", "t": "Ёлки-палки, рукав лопнул! Всё в масле!" },
+      { "id": "a-brk-exc-2", "who": "op.excavator", "t": "Ковш заклинило, твою дивизию!" },
+      { "id": "a-brk-exc-3", "who": "op.excavator", "t": "Всё, гидравлике конец. Стою." },
+      { "id": "a-brk-exc-4", "who": "op.excavator", "t": "Слесаря сюда, живо!" }
+    ],
+    "break.bulldozer": [
+      { "id": "a-brk-bul-1", "who": "op.bulldozer", "t": "Гусеница слетела, мать честная!" },
+      { "id": "a-brk-bul-2", "who": "op.bulldozer", "t": "Заглох, железяка дизельная!" },
+      { "id": "a-brk-bul-3", "who": "op.bulldozer", "t": "Отвал не поднимается, приехали!" },
+      { "id": "a-brk-bul-4", "who": "op.bulldozer", "t": "Да чтоб тебя, опять ломаешься!" }
+    ],
+    "break.crane": [
+      { "id": "a-brk-crn-1", "who": "op.crane", "t": "Стоп-стоп! Лебёдка, зараза, не тянет!" },
+      { "id": "a-brk-crn-2", "who": "op.crane", "t": "Груз висит, а кран встал. Приехали." },
+      { "id": "a-brk-crn-3", "who": "op.crane", "t": "Опора поехала! Все от крана!" },
+      { "id": "a-brk-crn-4", "who": "op.crane", "t": "Корпус ждёт, а я стою. Красота!" }
+    ],
+    "break.truck": [
+      { "id": "a-brk-trk-1", "who": "op.truck", "t": "Колесо пробил, едрить-колотить!" },
+      { "id": "a-brk-trk-2", "who": "op.truck", "t": "Кузов не поднимается, ерунда какая-то!" },
+      { "id": "a-brk-trk-3", "who": "op.truck", "t": "Заглох посреди дороги, вот зараза!" },
+      { "id": "a-brk-trk-4", "who": "op.truck", "t": "Опять двадцать пять, стартер!" }
+    ],
+    "repair.start": [
+      { "id": "a-rep-start-1", "who": "w6", "t": "Ну чё вы тут наломали, а?" },
+      { "id": "a-rep-start-2", "who": "w6", "t": "Отойди, дай гляну." },
+      { "id": "a-rep-start-3", "who": "w6", "t": "Щас разберёмся. Не дрейфь." },
+      { "id": "a-rep-start-4", "who": "w3", "t": "Михалыч, я ключи взял!" },
+      { "id": "a-rep-start-5", "who": "w3", "t": "Ёлки, тут всё в масле!" }
+    ],
+    "repair.done": [
+      { "id": "a-rep-done-1", "who": "w6", "t": "Всё, готово. Заводи!" },
+      { "id": "a-rep-done-2", "who": "w6", "t": "Работает. И больше не ломай!" },
+      { "id": "a-rep-done-3", "who": "w3", "t": "Раз-два, и готово!" }
+    ],
+    "fix.thanks": [
+      { "id": "a-thanks-1", "who": "op", "t": "Михалыч, ты волшебник!" },
+      { "id": "a-thanks-2", "who": "op", "t": "Ну ничего себе, работает!" },
+      { "id": "a-thanks-3", "who": "op", "t": "С меня пиво, мужики!" }
+    ],
+    "fix.thanks.crane": [
+      { "id": "a-thanks-crn-1", "who": "op.crane", "t": "Мальчики, вы лучшие! Поехали!" }
+    ],
+    "wait.long": [
+      { "id": "a-wait-1", "who": "op", "t": "Час стою! Где слесаря?" },
+      { "id": "a-wait-2", "who": "op", "t": "Эй, вы там уснули? Я жду!" },
+      { "id": "a-wait-3", "who": "op", "t": "Сижу, курю, баклуши бью." }
+    ],
+    "wait.long.crane": [
+      { "id": "a-wait-crn-1", "who": "op.crane", "t": "Мальчики, я тут до ночи стоять буду?" }
+    ],
+    "wait.over": [
+      { "id": "a-over-1", "who": "op", "t": "Ну наконец-то, дождался!" },
+      { "id": "a-over-2", "who": "op", "t": "Слава богу, про меня вспомнили!" }
+    ],
+    "foreman.rant": [
+      { "id": "a-rant-1", "who": "foreman", "t": "Это что за безобразие? Полплощадки стоит!" },
+      { "id": "a-rant-2", "who": "foreman", "t": "Бригада, а ну шевелись!" },
+      { "id": "a-rant-3", "who": "foreman", "t": "Каждый час простоя — деньги на ветер!", "s": "Каждый час простоя, деньги на ветер!" }
+    ],
+    "solo.overload": [
+      { "id": "a-solo-1", "who": "w6", "t": "Я один, а их двадцать!" },
+      { "id": "a-solo-2", "who": "w6", "t": "Зачем Серёгу уволили?!" },
+      { "id": "a-solo-3", "who": "w6", "t": "Экономисты, сами бы чинили." }
+    ],
+    "repair.switch": [
+      { "id": "a-switch-1", "who": "w6", "t": "Бросай всё, к крану бегом!" }
+    ],
+    "shift.start": [
+      { "id": "a-shift-start-1", "who": "foreman", "t": "Подъём, мужики, смена пошла!" }
+    ],
+    "shift.end": [
+      { "id": "a-shift-end-1", "who": "foreman", "t": "Шабаш, мужики! Всё, по домам." }
+    ],
+    "edition.on": [
+      { "id": "a-edition-1", "who": "foreman", "t": "Так, мужики, теперь всё по-настоящему." }
+    ],
+    "fire.boss": [
+      { "id": "a-fire-boss-1", "who": "foreman", "t": "Серёга, ты уволен. Экономия." }
+    ],
+    "fire.r3_shock": [
+      { "id": "a-fire-shock-1", "who": "w3", "t": "Чего?! Вы там совсем с ума сошли?" }
+    ],
+    "fire.r6": [
+      { "id": "a-fire-r6-1", "who": "w6", "t": "И как я один на двадцать машин?" }
+    ],
+    "fire.r3_rage": [
+      { "id": "a-fire-rage-1", "who": "w3", "t": "Да ну вас с вашей экономией! Нате каску!" }
+    ],
+    "fire.r3_bye": [
+      { "id": "a-fire-bye-1", "who": "w3", "t": "Михалыч, держись. А вы без меня ещё взвоете!" }
+    ],
+    "fire.after": [
+      { "id": "a-fire-after-1", "who": "w6", "t": "Справимся, ага. Как же." }
+    ],
+    "return.boss": [
+      { "id": "a-ret-boss-1", "who": "foreman", "t": "Серёга, вернись! Посчитали — без тебя никак.", "s": "Серёга, вернись! Посчитали, без тебя никак." }
+    ],
+    "return.r3_hello": [
+      { "id": "a-ret-hello-1", "who": "w3", "t": "Ну что, без меня никак?" }
+    ],
+    "return.helmet": [
+      { "id": "a-ret-helmet-1", "who": "w3", "t": "Каску мою не утащили?" }
+    ],
+    "return.r6": [
+      { "id": "a-ret-r6-1", "who": "w6", "t": "Серёга! Слава богу! Бери ключ!" }
+    ],
+    "return.r3_go": [
+      { "id": "a-ret-go-1", "who": "w3", "t": "Погнали!" }
+    ],
+    "stay.r3": [
+      { "id": "a-stay-r3-1", "who": "w3", "t": "Чё, передумали?" }
+    ],
+    "stay.boss": [
+      { "id": "a-stay-boss-1", "who": "foreman", "t": "Остаёшься, остаёшься. Работай." }
+    ]
+  }
+}

@@ -1,8 +1,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Model, DEFAULT_CONFIG, STRATEGIES, validate } from "./model.js";
-import { Site, labelSprite } from "./scene.js";
+import { Site, labelSprite, CLASSIC_KIT } from "./scene.js";
 import { World } from "./world.js";
+import { AudioEngine } from "./audio.js";
+import { Voice } from "./voice.js";
+import { Bubbles } from "./bubbles.js";
+import { Director } from "./director.js";
+import { loadLines, linesData } from "./lines.js";
+import { getEdition, setEdition, onEditionChange, bindToggle, setTogglesDisabled, EDITION_CFG } from "./edition.js";
 
 const $ = (s) => document.querySelector(s);
 const rub = (x) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(Math.round(x)) + " ₽";
@@ -10,6 +16,8 @@ const num = (x, d = 1) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits
 const KIND_NAMES = { excavator: "Экскаватор", bulldozer: "Бульдозер", crane: "Автокран", truck: "Самосвал" };
 const SPEEDS = [{ h: 0.15, label: "×½" }, { h: 0.33, label: "×1" }, { h: 0.8, label: "×2" }, { h: 2.0, label: "×6" }];
 const STORE_KEY = "slesar-ar-config-v1";
+const SOUND_KEY = "slesar-ar-sound-v1";
+const DEBUG = new URLSearchParams(location.search).has("debug");
 
 const layout = await fetch("js/layout.json").then((r) => r.json());
 const markerTex = new THREE.TextureLoader().load("assets/marker.png");
@@ -29,7 +37,31 @@ const state = {
   between: 0,              // пауза между сменами, с
   worlds: [],
   root: new THREE.Group(), // содержимое площадки во внутренних координатах (y вверх)
+  edition: getEdition(),   // classic | adult («Для опытных») — только оформление и звук
+  kit: CLASSIC_KIT,        // набор моделей
+  editionToken: 0,
+  scene: null, renderer: null, camera: null, ground: null, lightRig: null,
 };
+
+// звук, голоса, субтитры: объекты создаются сразу, контекст — по первому нажатию
+const audio = new AudioEngine();
+const voice = new Voice(audio);
+const bubbles = new Bubbles($("#bubbles"));
+let director = null;
+const sound = loadSound();
+function loadSound() {
+  const def = { muted: false, volume: 0.8, voices: true, subs: true, amb: true };
+  try { return { ...def, ...JSON.parse(localStorage.getItem(SOUND_KEY) || "{}") }; } catch (e) { return def; }
+}
+function saveSound() { try { localStorage.setItem(SOUND_KEY, JSON.stringify(sound)); } catch (e) { /* не критично */ } }
+function applySound() {
+  audio.setVolume(sound.volume);
+  audio.setMuted(sound.muted);
+  audio.setAmbOn(sound.amb);
+  voice.setEnabled(sound.voices && !sound.muted);
+  bubbles.setEnabled(sound.subs);
+}
+applySound();
 let model = new Model(state.cfg);
 
 function loadConfig() {
@@ -47,8 +79,18 @@ const stratKey = (m) => (m === "solo" ? "solo6" : "team") + (state.discipline ==
 // ---------------------------------------------------------------------------
 // Построение миров
 // ---------------------------------------------------------------------------
+// подпись мира в «Двух мирах» (нужна и при пересборке площадки после смены версии)
+function addWorldLabel(site, d) {
+  const lbl = labelSprite(d.label, d.color);
+  lbl.scale.multiplyScalar(2.2);
+  lbl.position.set(0, 0.2, -layout.aspect / 2);
+  site.group.add(lbl);
+  site.own.push(lbl.material.map, lbl.material);
+}
+const siteOpts = (o) => ({ ...o, kit: state.kit, detail: state.mode === "both" ? "low" : "high" });
+
 function buildWorlds() {
-  for (const w of state.worlds) state.root.remove(w.site.group);
+  for (const w of state.worlds) w.site.dispose();
   state.root.clear();
   state.worlds = [];
   const seed = (state.cfg.seed || 2026) + Math.floor(Math.random() * 1e6);
@@ -60,22 +102,43 @@ function buildWorlds() {
       { key: stratKey("solo"), workers: ["6"], x: 0.255, label: "Без 3-го разряда", color: "#ff3b30" },
     ];
     for (const d of defs) {
-      const site = new Site(model, layout, { withBase: true, baseTexture: markerTex, workers: d.workers });
+      const opts = { withBase: true, baseTexture: markerTex, workers: d.workers };
+      const site = new Site(model, layout, siteOpts(opts));
       site.group.scale.setScalar(0.48);
       site.group.position.set(d.x, 0.004, 0);
-      const lbl = labelSprite(d.label, d.color);
-      lbl.scale.multiplyScalar(2.2);
-      lbl.position.set(0, 0.2, -layout.aspect / 2);
-      site.group.add(lbl);
+      addWorldLabel(site, d);
       state.root.add(site.group);
-      state.worlds.push(new World(model, d.key, site, seed));       // общие случайные числа
+      const w = new World(model, d.key, site, seed);       // общие случайные числа
+      Object.assign(w, { def: d, opts });
+      state.worlds.push(w);
     }
   } else {
-    const site = new Site(model, layout, { withBase, baseTexture: markerTex, workers: state.mode === "solo" ? ["6"] : ["6", "3"] });
+    const opts = { withBase, baseTexture: markerTex, workers: state.mode === "solo" ? ["6"] : ["6", "3"] };
+    const site = new Site(model, layout, siteOpts(opts));
     state.root.add(site.group);
-    state.worlds.push(new World(model, stratKey(state.mode), site, seed));
+    const w = new World(model, stratKey(state.mode), site, seed);
+    w.opts = opts;
+    state.worlds.push(w);
   }
+  director?.attach(state.worlds, state.mode);
+  $("#voice-focus").classList.toggle("hidden", state.mode !== "both");
+  renderFocus();
   renderHud(true);
+}
+
+// смена версии на лету: новые модели, смена (часы, деньги, поломки, слесари) продолжается
+function rebuildSites() {
+  for (const w of state.worlds) {
+    const old = w.site;
+    const ns = new Site(model, layout, siteOpts(w.opts));
+    ns.adoptStateFrom(old);
+    ns.group.scale.copy(old.group.scale);
+    ns.group.position.copy(old.group.position);
+    if (w.def) addWorldLabel(ns, w.def);
+    state.root.add(ns.group);
+    old.dispose();
+    w.site = ns;
+  }
 }
 
 function setMode(mode) {
@@ -97,11 +160,31 @@ function setMode(mode) {
 // ---------------------------------------------------------------------------
 // Сцена: 3D и AR
 // ---------------------------------------------------------------------------
-function addLights(scene) {
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xb59c78, 1.6));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.8);
-  sun.position.set(0.6, 1.2, 0.8);
-  scene.add(sun);
+// свет по версии: обычная — прежний (без окружения и тональной компрессии),
+// «Для опытных» — свет, окружение PMREM и ACES из набора моделей
+function addLights(scene, renderer) {
+  if (state.lightRig) state.lightRig.removeFromParent();
+  let rig;
+  if (state.kit.env) rig = state.kit.env.setupLights(scene, renderer);
+  else {
+    rig = new THREE.Group();
+    rig.add(new THREE.HemisphereLight(0xffffff, 0xb59c78, 1.6));
+    const sun = new THREE.DirectionalLight(0xffffff, 1.8);
+    sun.position.set(0.6, 1.2, 0.8);
+    rig.add(sun);
+    scene.environment = null;
+    renderer.toneMapping = THREE.NoToneMapping;
+  }
+  scene.add(rig);
+  state.lightRig = rig;
+}
+function skyColor() {
+  return state.kit.env?.sky || getComputedStyle(document.body).getPropertyValue("--sky").trim() || "#bfe6ff";
+}
+function applyBackdrop() {
+  if (state.view !== "3d" || !state.scene) return;
+  state.scene.background = new THREE.Color(skyColor());
+  state.ground.material.color.set(state.kit.env?.ground || "#9fd27f");
 }
 
 let tick = () => {};
@@ -115,7 +198,7 @@ async function start3D() {
   renderer.setSize(innerWidth, innerHeight);
   stage.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(getComputedStyle(document.body).getPropertyValue("--sky").trim() || "#bfe6ff");
+  scene.background = new THREE.Color(skyColor());
   const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 20);
   // камера подбирается так, чтобы площадка целиком влезла в экран; в портрете схема повёрнута
   const fit = () => {
@@ -132,8 +215,10 @@ async function start3D() {
     controls.target.set(0, 0, 0.02);
   };
   state.refit = fit;
-  addLights(scene);
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 48), new THREE.MeshStandardMaterial({ color: "#9fd27f", roughness: 1 }));
+  Object.assign(state, { scene, renderer, camera });
+  addLights(scene, renderer);
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 48), new THREE.MeshStandardMaterial({ color: state.kit.env?.ground || "#9fd27f", roughness: 1 }));
+  state.ground = ground;
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -0.013;
   scene.add(ground);
@@ -150,6 +235,7 @@ async function start3D() {
     fit();
   };
   addEventListener("resize", onResize);
+  director.setView({ camera, canvas: renderer.domElement, isVisible: () => true });
   buildWorlds();
   fit();
   const clock = new THREE.Clock();
@@ -171,14 +257,16 @@ async function startAR() {
     filterMinCF: 0.0001, filterBeta: 0.001,
   });
   const { renderer, scene, camera } = mindar;
-  addLights(scene);
+  Object.assign(state, { scene, renderer, camera });
+  addLights(scene, renderer);
   const anchor = mindar.addAnchor(0);
   const holder = new THREE.Group();
   holder.rotation.x = Math.PI / 2;            // внутренние координаты (y вверх) → плоскость метки
   holder.add(state.root);
   anchor.group.add(holder);
-  anchor.onTargetFound = () => $("#scan").classList.add("hidden");
-  anchor.onTargetLost = () => $("#scan").classList.remove("hidden");
+  anchor.onTargetFound = () => { $("#scan").classList.add("hidden"); director.setTracking(true); };
+  anchor.onTargetLost = () => { $("#scan").classList.remove("hidden"); director.setTracking(false); };
+  director.setView({ camera, canvas: renderer.domElement, isVisible: () => anchor.group.visible });
   buildWorlds();
   $("#scan").classList.remove("hidden");
   await mindar.start();
@@ -209,9 +297,23 @@ tick = (dt) => {
     w.site.walkScale = Math.max(1, SPEEDS[state.speed].h / 0.33);
     w.site.update(state.paused ? 0 : dt);
   }
+  director?.update(dt, { paused: state.paused, hoursPerSec: SPEEDS[state.speed].h });
   hudTimer -= dt;
   if (hudTimer <= 0) { hudTimer = 0.12; renderHud(); }
+  if (DEBUG) debugOverlay(dt);
 };
+
+// ?debug: вызовы отрисовки, треугольники, FPS, состояние звука
+let dbgT = 0, dbgN = 0;
+function debugOverlay(dt) {
+  dbgT += dt; dbgN++;
+  if (dbgT < 0.5) return;
+  let el = $("#debug");
+  if (!el) { el = document.createElement("pre"); el.id = "debug"; document.body.appendChild(el); }
+  const r = state.renderer?.info.render;
+  el.textContent = `calls ${r?.calls} · tris ${((r?.triangles || 0) / 1000).toFixed(0)}k · fps ${(dbgN / dbgT).toFixed(0)}\naudio ${audio.ctx?.state || "—"} · ${audio.set} · bank ${audio.memoryMB.toFixed(1)} МБ\nvoice ${voice.manifest ? "файлы" : "—"} · web ${voice.web.any?.name || "—"}`;
+  dbgT = 0; dbgN = 0;
+}
 
 function endOfDay() {
   state.between = 3;
@@ -341,12 +443,14 @@ async function openVerdict() {
   if (lastVerdict) return;
   const wasPaused = state.paused;
   state.paused = true;
+  director?.setPaused(true);
   body.innerHTML = `<p class="hint">Моделирую ${num(state.cfg.sim_days, 0)} рабочих дней для каждой из ${STRATEGIES.length} стратегий и решаю уравнения Колмогорова…</p><div class="progress"><i id="vp"></i></div><p class="hint" id="vp-text"></p>`;
   const res = await model.runAll(state.cfg.sim_days, state.cfg.seed || 2026, (i, n, s) => {
     $("#vp").style.width = `${(100 * i) / n}%`;
     if (s) $("#vp-text").textContent = s.title;
   });
   state.paused = wasPaused;
+  director?.setPaused(state.paused);
   lastVerdict = res;
   body.innerHTML = verdictHTML(res);
 }
@@ -417,7 +521,19 @@ function toast(html, ms = 2200) {
   toastTimer = setTimeout(() => t.classList.remove("show"), ms);
 }
 
+// загрузка набора моделей «Для опытных» (кэш модуля; обычная версия его не грузит)
+async function loadKit(ed) {
+  if (ed !== "adult") return CLASSIC_KIT;
+  return (await import("./models-real.js")).kit;
+}
+
 async function enter(view) {
+  state.edition = getEdition();
+  try { state.kit = await loadKit(state.edition); }
+  catch (e) { console.error(e); state.edition = "classic"; state.kit = CLASSIC_KIT; setEdition("classic"); toast("Не удалось загрузить режим «Для опытных»", 3000); }
+  director = new Director({ audio, voice, bubbles, edition: state.edition });
+  audio.setSet(EDITION_CFG[state.edition].sfxSet);
+  voice.init(state.edition).then(() => { if (!voice.available) noVoiceToast(); });
   $("#start").classList.add("hidden");
   $("#hud").classList.remove("hidden");
   $("#bar").classList.remove("hidden");
@@ -435,10 +551,20 @@ async function enter(view) {
   }
 }
 
-$("#btn-ar").onclick = () => enter("ar");
-$("#btn-3d").onclick = () => enter("3d");
+// разблокировка звука и речи — СИНХРОННО в обработчике нажатия, до любого await (iOS)
+function launch(view) {
+  audio.unlockSync();
+  voice.unlockSync();
+  enter(view);
+}
+$("#btn-ar").onclick = () => launch("ar");
+$("#btn-3d").onclick = () => launch("3d");
 $("#btn-home").onclick = () => location.reload();
-$("#btn-pause").onclick = (e) => { state.paused = !state.paused; e.currentTarget.textContent = state.paused ? "▶" : "⏸"; };
+$("#btn-pause").onclick = (e) => {
+  state.paused = !state.paused;
+  e.currentTarget.textContent = state.paused ? "▶" : "⏸";
+  director?.setPaused(state.paused);
+};
 $("#btn-speed").onclick = (e) => { state.speed = (state.speed + 1) % SPEEDS.length; e.currentTarget.textContent = SPEEDS[state.speed].label; };
 document.querySelectorAll("#mode button").forEach((b) => (b.onclick = () => setMode(b.dataset.mode)));
 $("#btn-data").onclick = openData;
@@ -446,5 +572,118 @@ $("#btn-verdict").onclick = openVerdict;
 document.querySelectorAll("[data-close]").forEach((b) => (b.onclick = () => b.closest(".panel").classList.add("hidden")));
 document.querySelectorAll(".panel").forEach((p) => p.addEventListener("click", (e) => { if (e.target === p) p.classList.add("hidden"); }));
 
+// ---------------------------------------------------------------------------
+// Версия: тумблеры «Для опытных» на старте и в попапе, переключение на лету
+// ---------------------------------------------------------------------------
+bindToggle($("#tgl-pro-start"));
+bindToggle($("#tgl-pro-game"));
+onEditionChange((ed) => applyEdition(ed));
+
+async function applyEdition(ed) {
+  if (!state.view || !director || !state.scene) return;   // стартовый экран: только тема и сохранение
+  const tok = ++state.editionToken;
+  setTogglesDisabled(true);
+  toast("Переключаю…", 1200);
+  let kit;
+  try { kit = await loadKit(ed); }
+  catch (e) {
+    console.error(e);
+    setTogglesDisabled(false);
+    toast("Не удалось загрузить режим «Для опытных»", 3000);
+    setEdition("classic");
+    return;
+  }
+  if (tok !== state.editionToken) return;                  // пока грузилось, переключили ещё раз
+  state.edition = ed;
+  state.kit = kit;
+  try {
+    addLights(state.scene, state.renderer);
+    applyBackdrop();
+    rebuildSites();
+  } catch (e) {
+    console.error(e);
+    buildWorlds();
+    toast("Новая смена", 2000);
+  }
+  director.setEdition(ed);
+  director.attach(state.worlds, state.mode);
+  audio.setSet(EDITION_CFG[ed].sfxSet);
+  voice.setSet(ed);
+  setTogglesDisabled(false);
+  toast(ed === "adult" ? "Режим «<b>Для опытных</b>» включён" : "<b>Обычная</b> версия", 1800);
+  renderHud();
+}
+
+// ---------------------------------------------------------------------------
+// Попап «Звук и версия»
+// ---------------------------------------------------------------------------
+function renderSound() {
+  $("#snd-mute").textContent = sound.muted ? "🔇 Звук выключен" : "🔊 Звук включён";
+  $("#btn-sound").textContent = sound.muted ? "🔇" : "🔊";
+  $("#vol").value = sound.volume;
+  $("#snd-voices").checked = sound.voices;
+  $("#snd-subs").checked = sound.subs;
+  $("#snd-amb").checked = sound.amb;
+}
+renderSound();
+$("#btn-sound").onclick = () => {
+  audio.unlockSync();
+  $("#sound-pop").classList.toggle("hidden");
+};
+document.addEventListener("pointerdown", (e) => {
+  const pop = $("#sound-pop");
+  if (!pop.classList.contains("hidden") && !pop.contains(e.target) && !$("#btn-sound").contains(e.target)) pop.classList.add("hidden");
+});
+const soundChanged = () => { saveSound(); applySound(); renderSound(); };
+$("#snd-mute").onclick = () => { sound.muted = !sound.muted; if (!sound.muted) audio.unlockSync(); soundChanged(); };
+$("#vol").oninput = (e) => { sound.volume = Number(e.target.value); soundChanged(); };
+$("#snd-voices").onchange = (e) => { sound.voices = e.target.checked; soundChanged(); };
+$("#snd-subs").onchange = (e) => { sound.subs = e.target.checked; soundChanged(); };
+$("#snd-amb").onchange = (e) => { sound.amb = e.target.checked; soundChanged(); };
+
+// «Проверить голоса»: по одной реплике за каждую роль текущей версии
+$("#snd-test").onclick = async () => {
+  audio.unlockSync();
+  voice.unlockSync();
+  await voice.init(getEdition());
+  await loadLines();
+  const data = linesData(), set = EDITION_CFG[getEdition()].linesSet;
+  voice.cancelAll();
+  for (const who of ["foreman", "w6", "w3", "op.excavator", "op.bulldozer", "op.crane", "op.truck"]) {
+    const line = Object.values(data[set]).flat().find((l) => l.who === who);
+    if (!line) continue;
+    let b = null;
+    const st = await voice.say({
+      line, priority: 95, ttl: 30,
+      onStart: () => { b = bubbles.show({ who, label: data.roles[who].label, text: line.t, anchor: null }); },
+      onEnd: () => bubbles.hide(b, 0.4),
+    });
+    if (st === "cancelled") break;
+  }
+};
+
+// «Два мира»: чей голос слышен
+function renderFocus() {
+  if (!director) return;
+  $("#voice-focus").textContent = director.focus === 1 ? "🔊 Озвучка: без 3-го ⇄" : "🔊 Озвучка: с 3-м ⇄";
+}
+$("#voice-focus").onclick = () => { director?.setFocus(director.focus === 1 ? 0 : 1); renderFocus(); };
+
+let noVoiceShown = false;
+function noVoiceToast() {
+  if (noVoiceShown || !sound.voices) return;
+  noVoiceShown = true;
+  toast("Нет русского голоса — показываю субтитры.<br>iOS: Настройки → Универсальный доступ → Устный контент → Голоса → Русский<br>Android: Настройки → Синтез речи → Google, русский", 6000);
+}
+voice.onNoVoice = noVoiceToast;
+audio.onLoadStart = () => toast("Загружаю звуки…", 1500);
+
+// вкладка скрыта — тишина
+document.addEventListener("visibilitychange", () => {
+  audio.setHidden(document.hidden);
+  if (document.hidden) { voice.cancelAll(); bubbles.clear(); }
+});
+
 // для отладки в консоли
-window.__app = { state, get model() { return model; } };
+window.__app = { state, audio, voice, bubbles, get director() { return director; }, get renderer() { return state.renderer; }, get model() { return model; } };
+

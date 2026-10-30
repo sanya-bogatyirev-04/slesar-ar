@@ -28,7 +28,7 @@
 <p>Реплики персонажей (js/lines.json): ни в одной версии нет мата, у каждой реплики есть озвучка с тем же текстом.</p>
 <pre id="out-lines">проверяю…</pre>
 <script type="module">
-  // корни нецензурной лексики (проверяются и субтитр t, и текст для голоса s)
+  // корни нецензурной лексики (проверяются и субтитр t, и текст для голоса s — без знаков ударения «+»)
   const BAD = /(^|[^а-яё])(бля(?!х)|[её]б|хер(?!с))|ёб|за[её]б|на[её]б|у[её]б|от[ъь]?[её]б|вы[её]б|по[её]б|съ[её]б|ебан|ебуч|ебат|ебал|хуй|хуё|хуе|хуя|хуи|пизд|муда|мудо|залуп|сук[аи](?![а-яё])|ссы|сра[лт]|обоср|ёпт|говн|жоп|херак/i;
   const L = await fetch("js/lines.json").then((r) => r.json());
   const M = await fetch("assets/voice/voice-manifest.json").then((r) => (r.ok ? r.json() : { items: {} }));
@@ -38,7 +38,7 @@
     let n = 0, bad = 0, miss = 0;
     for (const [cat, arr] of Object.entries(L[set])) for (const l of arr) {
       n++;
-      for (const f of ["t", "s"]) if (l[f] && BAD.test(l[f].toLowerCase())) { bad++; out.push(`МАТ  ${l.id}: ${l[f]}`); }
+      for (const f of ["t", "s"]) if (l[f] && BAD.test(l[f].replace(/\+/g, "").toLowerCase())) { bad++; out.push(`МАТ  ${l.id}: ${l[f]}`); }
       const it = M.items[l.id];
       if (!it || it.text !== (l.s || l.t)) { miss++; out.push(`ГОЛОС ${l.id}: нет файла или текст не совпадает`); }
     }

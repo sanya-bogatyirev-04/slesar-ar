@@ -739,7 +739,7 @@ export function makeWorker(grade) {
         pb.add(gBox(0.0016, 0.0012, 0.0004), "figure", { p: [0, -0.0052, 0] }, "#8c8d8a", { dirt: false });
       });
       wrench.position.set(0.0006, -0.006, 0);
-      wrench.rotation.z = Math.PI / 2;
+      wrench.rotation.z = wrench.userData.baseZ = Math.PI / 2;
       fore.add(wrench);
     }
     arms[side] = { arm, fore };

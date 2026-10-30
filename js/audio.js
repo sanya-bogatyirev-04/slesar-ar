@@ -366,6 +366,8 @@ export class AudioEngine {
   // выход одного звука: Gain → StereoPanner → шина
   out(bus, pan = 0, gain = 1) {
     const ctx = this.ctx;
+    if (!Number.isFinite(pan)) pan = 0;            // окно нулевого размера (свёрнуто) — проекция даёт NaN
+    if (!Number.isFinite(gain)) gain = 1;
     const g = ctx.createGain();
     g.gain.value = gain;
     let p;

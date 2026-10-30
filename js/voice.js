@@ -1,5 +1,5 @@
 // Озвучка реплик. Основной путь — заранее записанные файлы assets/voice/<id>.mp3
-// (голоса Windows Pavel / Irina, tools/make_voices.ps1): одинаково разборчиво на любом
+// (нейросетевые голоса Silero, tools/make_voices_silero.py): одинаково разборчиво на любом
 // телефоне. Откат — speechSynthesis браузера (только русский голос), последний откат —
 // «только субтитры». Очередь с приоритетами: сценка (≥ 90) вытесняет текущую фразу.
 import { loadLines, role } from "./lines.js";
@@ -182,10 +182,12 @@ export class Voice {
       node.connect(hp).connect(lp).connect(ws); node = ws;
     }
     const p = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
-    if (p) { p.pan.value = Math.max(-0.3, Math.min(0.3, item.pan)); node.connect(g).connect(p).connect(this.audio.bus.voice); }
+    if (p) { p.pan.value = Math.max(-0.3, Math.min(0.3, item.pan || 0)); node.connect(g).connect(p).connect(this.audio.bus.voice); }
     else node.connect(g).connect(this.audio.bus.voice);
-    item.stop = () => { try { src.stop(); } catch (e) { /* уже */ } };
-    src.onended = () => this.finish(item, item.cancelled ? "cancelled" : "done");
+    // сторож: если onended не придёт (iOS «interrupted», контекст уснул) — очередь не встаёт
+    const guard = setTimeout(() => { if (this.current === item) { try { src.stop(); } catch (e) { /* уже */ } this.finish(item, "done"); } }, (buf.duration + 1.5) * 1000);
+    item.stop = () => { clearTimeout(guard); try { src.stop(); } catch (e) { /* уже */ } };
+    src.onended = () => { clearTimeout(guard); this.finish(item, item.cancelled ? "cancelled" : "done"); };
     this.audio.duck(true);
     src.start();
     try { item.onStart?.(buf.duration, "file"); } catch (e) { console.error(e); }
@@ -193,7 +195,7 @@ export class Voice {
 
   speakTTS(item, r) {
     const line = item.line;
-    const text = (line.s || line.t).replace(/…/g, ",").replace(/[—–]/g, ",");
+    const text = (line.s || line.t).replace(/\+/g, "").replace(/…/g, ",").replace(/[—–]/g, ",");
     const u = new SpeechSynthesisUtterance(text);
     const female = r.voice === "Irina";
     const v = (female ? this.web.female : this.web.male) || this.web.any;

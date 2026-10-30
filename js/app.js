@@ -200,7 +200,18 @@ async function start3D() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(skyColor());
   const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.01, 20);
-  // камера подбирается так, чтобы площадка целиком влезла в экран; в портрете схема повёрнута
+  // свободная по высоте область между табло и нижней панелью: её центр — центр кадра
+  const freeArea = () => {
+    const top = $("#hud").getBoundingClientRect().bottom, bottom = $("#bar").getBoundingClientRect().top;
+    const H = innerHeight;
+    if (H < 50 || !(bottom > top) || bottom - top < H * 0.4) return { k: 1, shift: 0 };
+    return { k: H / (bottom - top), shift: (top + bottom) / 2 - H / 2 };
+  };
+  const applyOffset = () => {
+    const { shift } = freeArea();
+    camera.setViewOffset(innerWidth, innerHeight, 0, -shift, innerWidth, innerHeight);
+  };
+  // камера подбирается так, чтобы площадка целиком влезла в свободную область; в портрете схема повёрнута
   const fit = () => {
     const portrait = innerHeight > innerWidth * 1.1;
     state.root.rotation.y = portrait ? Math.PI / 2 : 0;
@@ -210,10 +221,20 @@ async function start3D() {
     const vf = THREE.MathUtils.degToRad(camera.fov) / 2;
     const hf = Math.atan(Math.tan(vf) * camera.aspect);
     const tilt = THREE.MathUtils.degToRad(50);
-    const d = Math.max(w / 2 / Math.tan(hf), (h * Math.sin(tilt) * 0.5 + 0.08) / Math.tan(vf) + h * Math.cos(tilt) * 0.5) * 1.12;
+    const { k } = freeArea();
+    const d = Math.max(w / 2 / Math.tan(hf), ((h * Math.sin(tilt) * 0.5 + 0.08) / Math.tan(vf)) * k + h * Math.cos(tilt) * 0.5) * 1.12;
     camera.position.set(0, d * Math.sin(tilt), d * Math.cos(tilt));
     controls.target.set(0, 0, 0.02);
+    applyOffset();
   };
+  // табло меняет высоту (другие числа, «Два мира») — сдвигаем кадр, не трогая поворот камеры
+  if (window.ResizeObserver) {
+    let lastH = 0;
+    new ResizeObserver(() => {
+      const hh = Math.round($("#hud").offsetHeight + $("#bar").offsetHeight);
+      if (Math.abs(hh - lastH) > 6) { lastH = hh; applyOffset(); }
+    }).observe($("#hud"));
+  }
   state.refit = fit;
   Object.assign(state, { scene, renderer, camera });
   addLights(scene, renderer);
@@ -267,6 +288,7 @@ async function startAR() {
   anchor.onTargetFound = () => { $("#scan").classList.add("hidden"); director.setTracking(true); };
   anchor.onTargetLost = () => { $("#scan").classList.remove("hidden"); director.setTracking(false); };
   director.setView({ camera, canvas: renderer.domElement, isVisible: () => anchor.group.visible });
+  director.setTracking(false);                 // до первого обнаружения метки — тишина в репликах
   buildWorlds();
   $("#scan").classList.remove("hidden");
   await mindar.start();
@@ -436,21 +458,33 @@ $("#btn-apply").onclick = () => {
 // ---------------------------------------------------------------------------
 // Вердикт: полный расчёт (Монте-Карло + уравнения Колмогорова)
 // ---------------------------------------------------------------------------
-let lastVerdict = null;
-async function openVerdict() {
-  $("#panel-verdict").classList.remove("hidden");
-  const body = $("#verdict-body");
-  if (lastVerdict) return;
-  const wasPaused = state.paused;
+let lastVerdict = null, verdictBusy = false;
+// пока открыта панель вердикта — пауза: смена стоит, речь оборвана, звуки площадки приглушены
+let verdictHold = null;                  // состояние паузы до открытия панели
+function holdForVerdict() {
+  if (verdictHold !== null) return;
+  verdictHold = state.paused;
   state.paused = true;
   director?.setPaused(true);
+}
+function releaseVerdict() {
+  if (verdictHold === null) return;
+  state.paused = verdictHold;
+  verdictHold = null;
+  director?.setPaused(state.paused);
+}
+async function openVerdict() {
+  $("#panel-verdict").classList.remove("hidden");
+  holdForVerdict();
+  const body = $("#verdict-body");
+  if (lastVerdict || verdictBusy) return;
+  verdictBusy = true;
   body.innerHTML = `<p class="hint">Моделирую ${num(state.cfg.sim_days, 0)} рабочих дней для каждой из ${STRATEGIES.length} стратегий и решаю уравнения Колмогорова…</p><div class="progress"><i id="vp"></i></div><p class="hint" id="vp-text"></p>`;
   const res = await model.runAll(state.cfg.sim_days, state.cfg.seed || 2026, (i, n, s) => {
     $("#vp").style.width = `${(100 * i) / n}%`;
     if (s) $("#vp-text").textContent = s.title;
   });
-  state.paused = wasPaused;
-  director?.setPaused(state.paused);
+  verdictBusy = false;
   lastVerdict = res;
   body.innerHTML = verdictHTML(res);
 }
@@ -569,8 +603,12 @@ $("#btn-speed").onclick = (e) => { state.speed = (state.speed + 1) % SPEEDS.leng
 document.querySelectorAll("#mode button").forEach((b) => (b.onclick = () => setMode(b.dataset.mode)));
 $("#btn-data").onclick = openData;
 $("#btn-verdict").onclick = openVerdict;
-document.querySelectorAll("[data-close]").forEach((b) => (b.onclick = () => b.closest(".panel").classList.add("hidden")));
-document.querySelectorAll(".panel").forEach((p) => p.addEventListener("click", (e) => { if (e.target === p) p.classList.add("hidden"); }));
+function closePanel(p) {
+  p.classList.add("hidden");
+  if (p.id === "panel-verdict") releaseVerdict();
+}
+document.querySelectorAll("[data-close]").forEach((b) => (b.onclick = () => closePanel(b.closest(".panel"))));
+document.querySelectorAll(".panel").forEach((p) => p.addEventListener("click", (e) => { if (e.target === p) closePanel(p); }));
 
 // ---------------------------------------------------------------------------
 // Версия: тумблеры «Для опытных» на старте и в попапе, переключение на лету
@@ -685,5 +723,5 @@ document.addEventListener("visibilitychange", () => {
 });
 
 // для отладки в консоли
-window.__app = { state, audio, voice, bubbles, get director() { return director; }, get renderer() { return state.renderer; }, get model() { return model; } };
+window.__app = { state, audio, voice, bubbles, tick: (dt) => tick(dt), get director() { return director; }, get renderer() { return state.renderer; }, get model() { return model; } };
 

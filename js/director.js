@@ -120,7 +120,7 @@ export class Director {
     const cam = this.view?.camera;
     if (cam && obj) {
       const v = new THREE.Vector3().setFromMatrixPosition(obj.matrixWorld).project(cam);
-      pan = clamp(v.x * 0.8, -0.8, 0.8);
+      pan = Number.isFinite(v.x) ? clamp(v.x * 0.8, -0.8, 0.8) : 0;
     }
     return { pan, gain: this.mode === "both" ? 0.6 : 1 };
   }
@@ -279,6 +279,9 @@ export class Director {
   // шаг сценки: фраза с приоритетом 100 и ожиданием её конца + 0,3 с
   async sceneLine(tok, cat, site) {
     if (tok !== this.sceneToken) return false;
+    // пауза (в т. ч. открытый «Вердикт») или потеря метки в AR — сценка ждёт, ничего не говорит
+    await this.waitFor(() => tok !== this.sceneToken || (!this.paused && this.tracking), 600);
+    if (tok !== this.sceneToken) return false;
     const line = this.picker.pick(this.cfg.linesSet, cat);
     if (line) {
       await this.sayLine(line, { anchor: this.anchorFor(line.who, site), priority: 100, ttl: 10 });
@@ -392,7 +395,7 @@ export class Director {
     // игрушечным фигуркам — жесты (у реалистичных моделей они встроены)
     for (const w of this.worlds) for (const wk of Object.values(w.site.workers)) if (!wk.obj.userData.gesture) installClassicGestures(wk.obj);
 
-    if (this.edAnnounce && t > this.edAnnounce) {
+    if (this.edAnnounce && t > this.edAnnounce && !this.paused && this.tracking) {
       this.edAnnounce = 0;
       const site = this.worlds[this.focus]?.site;
       const line = this.picker.pick(this.cfg.linesSet, "edition.on");

@@ -106,6 +106,7 @@ function Read-Stream($ras) {
 }
 
 function Escape-Ssml([string]$t) {
+  $t = $t.Replace("+", "")                                         # Silero stress marks
   $t = $t.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
   $t = $t.Replace([string][char]0x2026, "<break time='200ms'/>")     # ellipsis
   $t = $t.Replace([string][char]0x2014, ",")                         # em dash -> pause

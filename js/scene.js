@@ -649,20 +649,21 @@ export class Site {
       d.y = 0;
       const dist = d.length();
       const parts = w.obj.userData.parts;
+      const wrench0 = parts.wrench.userData.baseZ ?? 0;          // базовый поворот ключа в руке (у реалистичной модели — π/2)
       const moving = dist > 0.003;
       if (moving) {
         const stepLen = Math.min(dist, walk * dt);
         pos.add(d.multiplyScalar(stepLen / dist));
         w.obj.rotation.y = Math.atan2(-(target.z - pos.z), target.x - pos.x);
         parts.body.position.y = 0.016 + Math.abs(Math.sin(T * 14)) * 0.003;
-        parts.wrench.rotation.z = 0;
+        parts.wrench.rotation.z = wrench0;
       } else {
         parts.body.position.y = 0.016;
         if (!w.staged && w.job && w.job.state === "fix") {
           w.obj.lookAt(w.job.obj.position.x, 0, w.job.obj.position.z);
           w.obj.rotateY(-Math.PI / 2);
-          parts.wrench.rotation.z = Math.sin(T * 16) * 0.8;
-        } else parts.wrench.rotation.z = 0;
+          parts.wrench.rotation.z = wrench0 + Math.sin(T * 16) * 0.8;
+        } else parts.wrench.rotation.z = wrench0;
       }
       w.atJob = !moving && !w.staged && !w.leaving && w.job?.state === "fix";
       w.obj.userData.update?.(dt, T, { moving, working: w.atJob, leaving: w.leaving, walk, staged: !!w.staged });

@@ -1,1139 +1,1148 @@
 {
-    "format":  "mp3",
-    "voices":  {
-                   "Pavel":  "Microsoft Pavel",
-                   "Irina":  "Microsoft Irina"
-               },
-    "items":  {
-                  "c-brk-exc-1":  {
-                                      "file":  "c-brk-exc-1.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Ой-ой, ковш не слушается!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  1.966,
-                                      "bytes":  12443
-                                  },
-                  "c-brk-exc-2":  {
-                                      "file":  "c-brk-exc-2.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Гидравлика потекла, встаю!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  2.131,
-                                      "bytes":  13535
-                                  },
-                  "c-brk-exc-3":  {
-                                      "file":  "c-brk-exc-3.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Экскаватор встал. Слесаря сюда!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  2.928,
-                                      "bytes":  18215
-                                  },
-                  "c-brk-exc-4":  {
-                                      "file":  "c-brk-exc-4.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Кажется, шланг лопнул. Помогите!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  3.327,
-                                      "bytes":  20555
-                                  },
-                  "c-brk-bul-1":  {
-                                      "file":  "c-brk-bul-1.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Гусеница слетела!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  1.381,
-                                      "bytes":  9011
-                                  },
-                  "c-brk-bul-2":  {
-                                      "file":  "c-brk-bul-2.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Мотор чихнул и заглох.",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  1.571,
-                                      "bytes":  10103
-                                  },
-                  "c-brk-bul-3":  {
-                                      "file":  "c-brk-bul-3.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Отвал не поднимается, беда!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.138,
-                                      "bytes":  13535
-                                  },
-                  "c-brk-bul-4":  {
-                                      "file":  "c-brk-bul-4.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Перегрелся, стрелка в красном!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.339,
-                                      "bytes":  14783
-                                  },
-                  "c-brk-crn-1":  {
-                                      "file":  "c-brk-crn-1.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Стоп! Лебёдка не тянет!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  2.676,
-                                      "bytes":  16655
-                                  },
-                  "c-brk-crn-2":  {
-                                      "file":  "c-brk-crn-2.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Груз висит, кран не двигается!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  2.631,
-                                      "bytes":  16499
-                                  },
-                  "c-brk-crn-3":  {
-                                      "file":  "c-brk-crn-3.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Стрела не выдвигается, нужен слесарь.",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  3.028,
-                                      "bytes":  18839
-                                  },
-                  "c-brk-crn-4":  {
-                                      "file":  "c-brk-crn-4.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Кран стоит, а корпус ждёт!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  2.296,
-                                      "bytes":  14471
-                                  },
-                  "c-brk-trk-1":  {
-                                      "file":  "c-brk-trk-1.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Колесо пробил! Стою на обочине.",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.712,
-                                      "bytes":  16967
-                                  },
-                  "c-brk-trk-2":  {
-                                      "file":  "c-brk-trk-2.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Кузов не поднимается!",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  1.39,
-                                      "bytes":  9011
-                                  },
-                  "c-brk-trk-3":  {
-                                      "file":  "c-brk-trk-3.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Мотор заглох, не заводится.",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.047,
-                                      "bytes":  12911
-                                  },
-                  "c-brk-trk-4":  {
-                                      "file":  "c-brk-trk-4.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Самосвал встал, зовите слесаря.",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.412,
-                                      "bytes":  15095
-                                  },
-                  "c-rep-start-1":  {
-                                        "file":  "c-rep-start-1.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Иду, иду! Сейчас глянем.",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  2.99,
-                                        "bytes":  18527
-                                    },
-                  "c-rep-start-2":  {
-                                        "file":  "c-rep-start-2.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Так, что тут у нас?",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  1.656,
-                                        "bytes":  10571
-                                    },
-                  "c-rep-start-3":  {
-                                        "file":  "c-rep-start-3.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Спокойно, сейчас починим.",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  2.223,
-                                        "bytes":  14003
-                                    },
-                  "c-rep-start-4":  {
-                                        "file":  "c-rep-start-4.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Михалыч, я с тобой!",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  1.607,
-                                        "bytes":  10415
-                                    },
-                  "c-rep-start-5":  {
-                                        "file":  "c-rep-start-5.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Ключ на семнадцать, вот.",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  1.734,
-                                        "bytes":  11039
-                                    },
-                  "c-rep-done-1":  {
-                                       "file":  "c-rep-done-1.mp3",
-                                       "role":  "w6",
-                                       "voice":  "Pavel",
-                                       "text":  "Готово! Заводи!",
-                                       "pitch":  0.88,
-                                       "rate":  0.92,
-                                       "dur":  2.081,
-                                       "bytes":  13223
-                                   },
-                  "c-rep-done-2":  {
-                                       "file":  "c-rep-done-2.mp3",
-                                       "role":  "w6",
-                                       "voice":  "Pavel",
-                                       "text":  "Принимай машину!",
-                                       "pitch":  0.88,
-                                       "rate":  0.92,
-                                       "dur":  1.278,
-                                       "bytes":  8387
-                                   },
-                  "c-rep-done-3":  {
-                                       "file":  "c-rep-done-3.mp3",
-                                       "role":  "w3",
-                                       "voice":  "Pavel",
-                                       "text":  "Как новенький!",
-                                       "pitch":  1.18,
-                                       "rate":  1.06,
-                                       "dur":  0.877,
-                                       "bytes":  6047
-                                   },
-                  "c-thanks-1":  {
-                                     "file":  "c-thanks-1.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "Спасибо, мужики!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  1.572,
-                                     "bytes":  10103
-                                 },
-                  "c-thanks-2":  {
-                                     "file":  "c-thanks-2.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "Вот это скорость!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  1.112,
-                                     "bytes":  7451
-                                 },
-                  "c-thanks-3":  {
-                                     "file":  "c-thanks-3.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "Золотые руки!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  0.918,
-                                     "bytes":  6203
-                                 },
-                  "c-thanks-crn-1":  {
-                                         "file":  "c-thanks-crn-1.mp3",
-                                         "role":  "op.crane",
-                                         "voice":  "Irina",
-                                         "text":  "Спасибо, мальчики! Поехали!",
-                                         "pitch":  1.05,
-                                         "rate":  1.02,
-                                         "dur":  3.619,
-                                         "bytes":  22427
-                                     },
-                  "c-wait-1":  {
-                                   "file":  "c-wait-1.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Ну где же слесарь?",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  1.155,
-                                   "bytes":  7607
-                               },
-                  "c-wait-2":  {
-                                   "file":  "c-wait-2.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Час уже стою, а время, деньги!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  2.464,
-                                   "bytes":  15407
-                               },
-                  "c-wait-3":  {
-                                   "file":  "c-wait-3.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Эй, про меня не забыли?",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  1.674,
-                                   "bytes":  10103
-                               },
-                  "c-wait-crn-1":  {
-                                       "file":  "c-wait-crn-1.mp3",
-                                       "role":  "op.crane",
-                                       "voice":  "Irina",
-                                       "text":  "Мальчики, я всё ещё жду!",
-                                       "pitch":  1.05,
-                                       "rate":  1.02,
-                                       "dur":  2.348,
-                                       "bytes":  14783
-                                   },
-                  "c-over-1":  {
-                                   "file":  "c-over-1.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Наконец-то!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  0.861,
-                                   "bytes":  5891
-                               },
-                  "c-over-2":  {
-                                   "file":  "c-over-2.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Ура, мой черёд!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  1.331,
-                                   "bytes":  8699
-                               },
-                  "c-rant-1":  {
-                                   "file":  "c-rant-1.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Что-то много машин стоит!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  1.83,
-                                   "bytes":  10883
-                               },
-                  "c-rant-2":  {
-                                   "file":  "c-rant-2.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Каждый час простоя, это рубли!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  2.42,
-                                   "bytes":  15251
-                               },
-                  "c-rant-3":  {
-                                   "file":  "c-rant-3.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Слесари, вы где? Очередь растёт!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  3.431,
-                                   "bytes":  21179
-                               },
-                  "c-solo-1":  {
-                                   "file":  "c-solo-1.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Я один, а машин двадцать!",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  2.177,
-                                   "bytes":  13691
-                               },
-                  "c-solo-2":  {
-                                   "file":  "c-solo-2.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Эх, был бы напарник…",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  1.783,
-                                   "bytes":  11351
-                               },
-                  "c-solo-3":  {
-                                   "file":  "c-solo-3.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Не разорваться же мне!",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  1.443,
-                                   "bytes":  9323
-                               },
-                  "c-switch-1":  {
-                                     "file":  "c-switch-1.mp3",
-                                     "role":  "w6",
-                                     "voice":  "Pavel",
-                                     "text":  "Бросай, идём к крану!",
-                                     "pitch":  0.88,
-                                     "rate":  0.92,
-                                     "dur":  1.85,
-                                     "bytes":  11819
-                                 },
-                  "c-shift-start-1":  {
-                                          "file":  "c-shift-start-1.mp3",
-                                          "role":  "foreman",
-                                          "voice":  "Pavel",
-                                          "text":  "Доброе утро! За работу!",
-                                          "pitch":  0.8,
-                                          "rate":  0.95,
-                                          "dur":  2.56,
-                                          "bytes":  15251
-                                      },
-                  "c-shift-end-1":  {
-                                        "file":  "c-shift-end-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Смена окончена, все молодцы!",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  2.382,
-                                        "bytes":  14939
-                                    },
-                  "c-edition-1":  {
-                                      "file":  "c-edition-1.mp3",
-                                      "role":  "foreman",
-                                      "voice":  "Pavel",
-                                      "text":  "Так, работаем культурно.",
-                                      "pitch":  0.8,
-                                      "rate":  0.95,
-                                      "dur":  2.003,
-                                      "bytes":  12755
-                                  },
-                  "c-fire-boss-1":  {
-                                        "file":  "c-fire-boss-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Серёга, ты уволен. Экономим на зарплате.",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  4.021,
-                                        "bytes":  24767
-                                    },
-                  "c-fire-shock-1":  {
-                                         "file":  "c-fire-shock-1.mp3",
-                                         "role":  "w3",
-                                         "voice":  "Pavel",
-                                         "text":  "Меня? Уволить?",
-                                         "pitch":  1.18,
-                                         "rate":  1.06,
-                                         "dur":  1.711,
-                                         "bytes":  11039
-                                     },
-                  "c-fire-r6-1":  {
-                                      "file":  "c-fire-r6-1.mp3",
-                                      "role":  "w6",
-                                      "voice":  "Pavel",
-                                      "text":  "Жаль. Без тебя будет тяжело.",
-                                      "pitch":  0.88,
-                                      "rate":  0.92,
-                                      "dur":  2.814,
-                                      "bytes":  17591
-                                  },
-                  "c-fire-sad-1":  {
-                                       "file":  "c-fire-sad-1.mp3",
-                                       "role":  "w3",
-                                       "voice":  "Pavel",
-                                       "text":  "Ну что ж, раз так решили…",
-                                       "pitch":  1.18,
-                                       "rate":  1.06,
-                                       "dur":  1.824,
-                                       "bytes":  11663
-                                   },
-                  "c-fire-bye-1":  {
-                                       "file":  "c-fire-bye-1.mp3",
-                                       "role":  "w3",
-                                       "voice":  "Pavel",
-                                       "text":  "Михалыч, удачи! Береги ключи.",
-                                       "pitch":  1.18,
-                                       "rate":  1.06,
-                                       "dur":  3.083,
-                                       "bytes":  18371
-                                   },
-                  "c-fire-after-1":  {
-                                         "file":  "c-fire-after-1.mp3",
-                                         "role":  "w6",
-                                         "voice":  "Pavel",
-                                         "text":  "Ну что ж, буду один.",
-                                         "pitch":  0.88,
-                                         "rate":  0.92,
-                                         "dur":  1.638,
-                                         "bytes":  10571
-                                     },
-                  "c-ret-boss-1":  {
-                                       "file":  "c-ret-boss-1.mp3",
-                                       "role":  "foreman",
-                                       "voice":  "Pavel",
-                                       "text":  "Серёга, возвращайся! Посчитали, без тебя дороже.",
-                                       "pitch":  0.8,
-                                       "rate":  0.95,
-                                       "dur":  5.165,
-                                       "bytes":  31631
-                                   },
-                  "c-ret-hello-1":  {
-                                        "file":  "c-ret-hello-1.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Я вернулся! Скучали?",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  2.332,
-                                        "bytes":  14627
-                                    },
-                  "c-ret-r6-1":  {
-                                     "file":  "c-ret-r6-1.mp3",
-                                     "role":  "w6",
-                                     "voice":  "Pavel",
-                                     "text":  "Наконец-то! Бери ключ, работы много.",
-                                     "pitch":  0.88,
-                                     "rate":  0.92,
-                                     "dur":  3.875,
-                                     "bytes":  23831
-                                 },
-                  "c-ret-go-1":  {
-                                     "file":  "c-ret-go-1.mp3",
-                                     "role":  "w3",
-                                     "voice":  "Pavel",
-                                     "text":  "За работу!",
-                                     "pitch":  1.18,
-                                     "rate":  1.06,
-                                     "dur":  0.73,
-                                     "bytes":  5111
-                                 },
-                  "c-stay-r3-1":  {
-                                      "file":  "c-stay-r3-1.mp3",
-                                      "role":  "w3",
-                                      "voice":  "Pavel",
-                                      "text":  "Ой, так я остаюсь?",
-                                      "pitch":  1.18,
-                                      "rate":  1.06,
-                                      "dur":  1.549,
-                                      "bytes":  9947
-                                  },
-                  "c-stay-boss-1":  {
-                                        "file":  "c-stay-boss-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Остаёшься, остаёшься. Пошутили.",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  3.642,
-                                        "bytes":  22427
-                                    },
-                  "a-brk-exc-1":  {
-                                      "file":  "a-brk-exc-1.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Ёлки-палки, рукав лопнул! Всё в масле!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  3.744,
-                                      "bytes":  23051
-                                  },
-                  "a-brk-exc-2":  {
-                                      "file":  "a-brk-exc-2.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Ковш заклинило, твою дивизию!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  2.32,
-                                      "bytes":  14627
-                                  },
-                  "a-brk-exc-3":  {
-                                      "file":  "a-brk-exc-3.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Всё, гидравлике конец. Стою.",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  3.135,
-                                      "bytes":  18683
-                                  },
-                  "a-brk-exc-4":  {
-                                      "file":  "a-brk-exc-4.mp3",
-                                      "role":  "op.excavator",
-                                      "voice":  "Pavel",
-                                      "text":  "Слесаря сюда, живо!",
-                                      "pitch":  1,
-                                      "rate":  1.02,
-                                      "dur":  1.708,
-                                      "bytes":  10883
-                                  },
-                  "a-brk-bul-1":  {
-                                      "file":  "a-brk-bul-1.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Гусеница слетела, мать честная!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.591,
-                                      "bytes":  16187
-                                  },
-                  "a-brk-bul-2":  {
-                                      "file":  "a-brk-bul-2.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Заглох, железяка дизельная!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.2,
-                                      "bytes":  13847
-                                  },
-                  "a-brk-bul-3":  {
-                                      "file":  "a-brk-bul-3.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Отвал не поднимается, приехали!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.445,
-                                      "bytes":  15407
-                                  },
-                  "a-brk-bul-4":  {
-                                      "file":  "a-brk-bul-4.mp3",
-                                      "role":  "op.bulldozer",
-                                      "voice":  "Pavel",
-                                      "text":  "Да чтоб тебя, опять ломаешься!",
-                                      "pitch":  0.92,
-                                      "rate":  0.98,
-                                      "dur":  2.351,
-                                      "bytes":  14783
-                                  },
-                  "a-brk-crn-1":  {
-                                      "file":  "a-brk-crn-1.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Стоп-стоп! Лебёдка, зараза, не тянет!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  4.424,
-                                      "bytes":  27107
-                                  },
-                  "a-brk-crn-2":  {
-                                      "file":  "a-brk-crn-2.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Груз висит, а кран встал. Приехали.",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  3.92,
-                                      "bytes":  24143
-                                  },
-                  "a-brk-crn-3":  {
-                                      "file":  "a-brk-crn-3.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Опора поехала! Все от крана!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  3.121,
-                                      "bytes":  19307
-                                  },
-                  "a-brk-crn-4":  {
-                                      "file":  "a-brk-crn-4.mp3",
-                                      "role":  "op.crane",
-                                      "voice":  "Irina",
-                                      "text":  "Корпус ждёт, а я стою. Красота!",
-                                      "pitch":  1.05,
-                                      "rate":  1.02,
-                                      "dur":  3.708,
-                                      "bytes":  22895
-                                  },
-                  "a-brk-trk-1":  {
-                                      "file":  "a-brk-trk-1.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Колесо пробил, едрить-колотить!",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.256,
-                                      "bytes":  14159
-                                  },
-                  "a-brk-trk-2":  {
-                                      "file":  "a-brk-trk-2.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Кузов не поднимается, ерунда какая-то!",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.753,
-                                      "bytes":  17123
-                                  },
-                  "a-brk-trk-3":  {
-                                      "file":  "a-brk-trk-3.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Заглох посреди дороги, вот зараза!",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.52,
-                                      "bytes":  15719
-                                  },
-                  "a-brk-trk-4":  {
-                                      "file":  "a-brk-trk-4.mp3",
-                                      "role":  "op.truck",
-                                      "voice":  "Pavel",
-                                      "text":  "Опять двадцать пять, стартер!",
-                                      "pitch":  1.06,
-                                      "rate":  1.06,
-                                      "dur":  2.021,
-                                      "bytes":  12755
-                                  },
-                  "a-rep-start-1":  {
-                                        "file":  "a-rep-start-1.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Ну чё вы тут наломали, а?",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  1.99,
-                                        "bytes":  12599
-                                    },
-                  "a-rep-start-2":  {
-                                        "file":  "a-rep-start-2.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Отойди, дай гляну.",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  1.685,
-                                        "bytes":  10727
-                                    },
-                  "a-rep-start-3":  {
-                                        "file":  "a-rep-start-3.mp3",
-                                        "role":  "w6",
-                                        "voice":  "Pavel",
-                                        "text":  "Щас разберёмся. Не дрейфь.",
-                                        "pitch":  0.88,
-                                        "rate":  0.92,
-                                        "dur":  2.785,
-                                        "bytes":  17435
-                                    },
-                  "a-rep-start-4":  {
-                                        "file":  "a-rep-start-4.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Михалыч, я ключи взял!",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  1.901,
-                                        "bytes":  12131
-                                    },
-                  "a-rep-start-5":  {
-                                        "file":  "a-rep-start-5.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Ёлки, тут всё в масле!",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  1.771,
-                                        "bytes":  11351
-                                    },
-                  "a-rep-done-1":  {
-                                       "file":  "a-rep-done-1.mp3",
-                                       "role":  "w6",
-                                       "voice":  "Pavel",
-                                       "text":  "Всё, готово. Заводи!",
-                                       "pitch":  0.88,
-                                       "rate":  0.92,
-                                       "dur":  2.75,
-                                       "bytes":  17123
-                                   },
-                  "a-rep-done-2":  {
-                                       "file":  "a-rep-done-2.mp3",
-                                       "role":  "w6",
-                                       "voice":  "Pavel",
-                                       "text":  "Работает. И больше не ломай!",
-                                       "pitch":  0.88,
-                                       "rate":  0.92,
-                                       "dur":  2.932,
-                                       "bytes":  18215
-                                   },
-                  "a-rep-done-3":  {
-                                       "file":  "a-rep-done-3.mp3",
-                                       "role":  "w3",
-                                       "voice":  "Pavel",
-                                       "text":  "Раз-два, и готово!",
-                                       "pitch":  1.18,
-                                       "rate":  1.06,
-                                       "dur":  1.447,
-                                       "bytes":  9323
-                                   },
-                  "a-thanks-1":  {
-                                     "file":  "a-thanks-1.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "Михалыч, ты волшебник!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  1.905,
-                                     "bytes":  12131
-                                 },
-                  "a-thanks-2":  {
-                                     "file":  "a-thanks-2.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "Ну ничего себе, работает!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  2.035,
-                                     "bytes":  12911
-                                 },
-                  "a-thanks-3":  {
-                                     "file":  "a-thanks-3.mp3",
-                                     "role":  "op",
-                                     "voice":  "Pavel",
-                                     "text":  "С меня пиво, мужики!",
-                                     "pitch":  1,
-                                     "rate":  1.02,
-                                     "dur":  1.651,
-                                     "bytes":  10571
-                                 },
-                  "a-thanks-crn-1":  {
-                                         "file":  "a-thanks-crn-1.mp3",
-                                         "role":  "op.crane",
-                                         "voice":  "Irina",
-                                         "text":  "Мальчики, вы лучшие! Поехали!",
-                                         "pitch":  1.05,
-                                         "rate":  1.02,
-                                         "dur":  3.662,
-                                         "bytes":  22583
-                                     },
-                  "a-wait-1":  {
-                                   "file":  "a-wait-1.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Час стою! Где слесаря?",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  2.464,
-                                   "bytes":  15407
-                               },
-                  "a-wait-2":  {
-                                   "file":  "a-wait-2.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Эй, вы там уснули? Я жду!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  2.761,
-                                   "bytes":  17279
-                               },
-                  "a-wait-3":  {
-                                   "file":  "a-wait-3.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Сижу, курю, баклуши бью.",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  2.198,
-                                   "bytes":  13847
-                               },
-                  "a-wait-crn-1":  {
-                                       "file":  "a-wait-crn-1.mp3",
-                                       "role":  "op.crane",
-                                       "voice":  "Irina",
-                                       "text":  "Мальчики, я тут до ночи стоять буду?",
-                                       "pitch":  1.05,
-                                       "rate":  1.02,
-                                       "dur":  3.026,
-                                       "bytes":  18839
-                                   },
-                  "a-over-1":  {
-                                   "file":  "a-over-1.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Ну наконец-то, дождался!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  1.976,
-                                   "bytes":  12599
-                               },
-                  "a-over-2":  {
-                                   "file":  "a-over-2.mp3",
-                                   "role":  "op",
-                                   "voice":  "Pavel",
-                                   "text":  "Слава богу, про меня вспомнили!",
-                                   "pitch":  1,
-                                   "rate":  1.02,
-                                   "dur":  2.26,
-                                   "bytes":  14159
-                               },
-                  "a-rant-1":  {
-                                   "file":  "a-rant-1.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Это что за безобразие? Полплощадки стоит!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  3.962,
-                                   "bytes":  24455
-                               },
-                  "a-rant-2":  {
-                                   "file":  "a-rant-2.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Бригада, а ну шевелись!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  1.886,
-                                   "bytes":  11975
-                               },
-                  "a-rant-3":  {
-                                   "file":  "a-rant-3.mp3",
-                                   "role":  "foreman",
-                                   "voice":  "Pavel",
-                                   "text":  "Каждый час простоя, деньги на ветер!",
-                                   "pitch":  0.8,
-                                   "rate":  0.95,
-                                   "dur":  2.832,
-                                   "bytes":  17591
-                               },
-                  "a-solo-1":  {
-                                   "file":  "a-solo-1.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Я один, а их двадцать!",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  1.878,
-                                   "bytes":  11975
-                               },
-                  "a-solo-2":  {
-                                   "file":  "a-solo-2.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Зачем Серёгу уволили?!",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  1.724,
-                                   "bytes":  11039
-                               },
-                  "a-solo-3":  {
-                                   "file":  "a-solo-3.mp3",
-                                   "role":  "w6",
-                                   "voice":  "Pavel",
-                                   "text":  "Экономисты, сами бы чинили.",
-                                   "pitch":  0.88,
-                                   "rate":  0.92,
-                                   "dur":  2.327,
-                                   "bytes":  14627
-                               },
-                  "a-switch-1":  {
-                                     "file":  "a-switch-1.mp3",
-                                     "role":  "w6",
-                                     "voice":  "Pavel",
-                                     "text":  "Бросай всё, к крану бегом!",
-                                     "pitch":  0.88,
-                                     "rate":  0.92,
-                                     "dur":  2.231,
-                                     "bytes":  14003
-                                 },
-                  "a-shift-start-1":  {
-                                          "file":  "a-shift-start-1.mp3",
-                                          "role":  "foreman",
-                                          "voice":  "Pavel",
-                                          "text":  "Подъём, мужики, смена пошла!",
-                                          "pitch":  0.8,
-                                          "rate":  0.95,
-                                          "dur":  2.694,
-                                          "bytes":  16811
-                                      },
-                  "a-shift-end-1":  {
-                                        "file":  "a-shift-end-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Шабаш, мужики! Всё, по домам.",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  3.639,
-                                        "bytes":  22427
-                                    },
-                  "a-edition-1":  {
-                                      "file":  "a-edition-1.mp3",
-                                      "role":  "foreman",
-                                      "voice":  "Pavel",
-                                      "text":  "Так, мужики, теперь всё по-настоящему.",
-                                      "pitch":  0.8,
-                                      "rate":  0.95,
-                                      "dur":  3.313,
-                                      "bytes":  20555
-                                  },
-                  "a-fire-boss-1":  {
-                                        "file":  "a-fire-boss-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Серёга, ты уволен. Экономия.",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  3.243,
-                                        "bytes":  20087
-                                    },
-                  "a-fire-shock-1":  {
-                                         "file":  "a-fire-shock-1.mp3",
-                                         "role":  "w3",
-                                         "voice":  "Pavel",
-                                         "text":  "Чего?! Вы там совсем с ума сошли?",
-                                         "pitch":  1.18,
-                                         "rate":  1.06,
-                                         "dur":  2.855,
-                                         "bytes":  17747
-                                     },
-                  "a-fire-r6-1":  {
-                                      "file":  "a-fire-r6-1.mp3",
-                                      "role":  "w6",
-                                      "voice":  "Pavel",
-                                      "text":  "И как я один на двадцать машин?",
-                                      "pitch":  0.88,
-                                      "rate":  0.92,
-                                      "dur":  2.172,
-                                      "bytes":  13691
-                                  },
-                  "a-fire-rage-1":  {
-                                        "file":  "a-fire-rage-1.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Да ну вас с вашей экономией! Нате каску!",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  3.236,
-                                        "bytes":  20087
-                                    },
-                  "a-fire-bye-1":  {
-                                       "file":  "a-fire-bye-1.mp3",
-                                       "role":  "w3",
-                                       "voice":  "Pavel",
-                                       "text":  "Михалыч, держись. А вы без меня ещё взвоете!",
-                                       "pitch":  1.18,
-                                       "rate":  1.06,
-                                       "dur":  3.845,
-                                       "bytes":  23675
-                                   },
-                  "a-fire-after-1":  {
-                                         "file":  "a-fire-after-1.mp3",
-                                         "role":  "w6",
-                                         "voice":  "Pavel",
-                                         "text":  "Справимся, ага. Как же.",
-                                         "pitch":  0.88,
-                                         "rate":  0.92,
-                                         "dur":  2.975,
-                                         "bytes":  18527
-                                     },
-                  "a-ret-boss-1":  {
-                                       "file":  "a-ret-boss-1.mp3",
-                                       "role":  "foreman",
-                                       "voice":  "Pavel",
-                                       "text":  "Серёга, вернись! Посчитали, без тебя никак.",
-                                       "pitch":  0.8,
-                                       "rate":  0.95,
-                                       "dur":  4.612,
-                                       "bytes":  28355
-                                   },
-                  "a-ret-hello-1":  {
-                                        "file":  "a-ret-hello-1.mp3",
-                                        "role":  "w3",
-                                        "voice":  "Pavel",
-                                        "text":  "Ну что, без меня никак?",
-                                        "pitch":  1.18,
-                                        "rate":  1.06,
-                                        "dur":  1.755,
-                                        "bytes":  11195
-                                    },
-                  "a-ret-helmet-1":  {
-                                         "file":  "a-ret-helmet-1.mp3",
-                                         "role":  "w3",
-                                         "voice":  "Pavel",
-                                         "text":  "Каску мою не утащили?",
-                                         "pitch":  1.18,
-                                         "rate":  1.06,
-                                         "dur":  1.448,
-                                         "bytes":  9323
-                                     },
-                  "a-ret-r6-1":  {
-                                     "file":  "a-ret-r6-1.mp3",
-                                     "role":  "w6",
-                                     "voice":  "Pavel",
-                                     "text":  "Серёга! Слава богу! Бери ключ!",
-                                     "pitch":  0.88,
-                                     "rate":  0.92,
-                                     "dur":  4.128,
-                                     "bytes":  24611
-                                 },
-                  "a-ret-go-1":  {
-                                     "file":  "a-ret-go-1.mp3",
-                                     "role":  "w3",
-                                     "voice":  "Pavel",
-                                     "text":  "Погнали!",
-                                     "pitch":  1.18,
-                                     "rate":  1.06,
-                                     "dur":  0.585,
-                                     "bytes":  4175
-                                 },
-                  "a-stay-r3-1":  {
-                                      "file":  "a-stay-r3-1.mp3",
-                                      "role":  "w3",
-                                      "voice":  "Pavel",
-                                      "text":  "Чё, передумали?",
-                                      "pitch":  1.18,
-                                      "rate":  1.06,
-                                      "dur":  1.245,
-                                      "bytes":  8231
-                                  },
-                  "a-stay-boss-1":  {
-                                        "file":  "a-stay-boss-1.mp3",
-                                        "role":  "foreman",
-                                        "voice":  "Pavel",
-                                        "text":  "Остаёшься, остаёшься. Работай.",
-                                        "pitch":  0.8,
-                                        "rate":  0.95,
-                                        "dur":  3.475,
-                                        "bytes":  21023
-                                    }
-              }
+ "format": "mp3",
+ "engine": "silero",
+ "model": "v5_6_ru",
+ "license": "Silero TTS models: CC BY-NC 4.0 (https://github.com/snakers4/silero-models)",
+ "voices": {
+  "w6": "aidar",
+  "w3": "eugene",
+  "foreman": "aidar",
+  "op": "eugene",
+  "op.excavator": "eugene",
+  "op.bulldozer": "aidar",
+  "op.truck": "eugene",
+  "op.crane": "xenia"
+ },
+ "items": {
+  "c-brk-exc-1": {
+   "file": "c-brk-exc-1.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Ой-ой, ковш не слушается!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.393,
+   "bytes": 9011
+  },
+  "c-brk-exc-2": {
+   "file": "c-brk-exc-2.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Гидравлика потекла, встаю!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.624,
+   "bytes": 10415
+  },
+  "c-brk-exc-3": {
+   "file": "c-brk-exc-3.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Экскав+атор встал. Сл+есаря сюда!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 2.022,
+   "bytes": 12755
+  },
+  "c-brk-exc-4": {
+   "file": "c-brk-exc-4.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Кажется, шланг лопнул. Помогите!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 2.027,
+   "bytes": 12911
+  },
+  "c-brk-bul-1": {
+   "file": "c-brk-bul-1.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Гусеница слетела!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 1.637,
+   "bytes": 10571
+  },
+  "c-brk-bul-2": {
+   "file": "c-brk-bul-2.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Мотор чихнул и заглох.",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 1.899,
+   "bytes": 12131
+  },
+  "c-brk-bul-3": {
+   "file": "c-brk-bul-3.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Отвал не поднимается, беда!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 1.938,
+   "bytes": 12287
+  },
+  "c-brk-bul-4": {
+   "file": "c-brk-bul-4.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Перегрелся, стрелка в красном!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 2.13,
+   "bytes": 13535
+  },
+  "c-brk-crn-1": {
+   "file": "c-brk-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Стоп! Лебёдка не тянет!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.039,
+   "bytes": 12911
+  },
+  "c-brk-crn-2": {
+   "file": "c-brk-crn-2.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Груз висит, кран не двигается!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.888,
+   "bytes": 11975
+  },
+  "c-brk-crn-3": {
+   "file": "c-brk-crn-3.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Стрела не выдвигается, нужен сл+есарь.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.148,
+   "bytes": 13535
+  },
+  "c-brk-crn-4": {
+   "file": "c-brk-crn-4.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Кран стоит, а корпус ждёт!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.053,
+   "bytes": 13067
+  },
+  "c-brk-trk-1": {
+   "file": "c-brk-trk-1.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Колесо пробил! Стою на обочине.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.945,
+   "bytes": 12287
+  },
+  "c-brk-trk-2": {
+   "file": "c-brk-trk-2.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Кузов не поднимается!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.178,
+   "bytes": 7763
+  },
+  "c-brk-trk-3": {
+   "file": "c-brk-trk-3.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Мотор заглох, не заводится.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.538,
+   "bytes": 9947
+  },
+  "c-brk-trk-4": {
+   "file": "c-brk-trk-4.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Самосвал встал, зовите сл+есаря.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.747,
+   "bytes": 11195
+  },
+  "c-rep-start-1": {
+   "file": "c-rep-start-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Иду, иду! Сейчас глянем.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.622,
+   "bytes": 16343
+  },
+  "c-rep-start-2": {
+   "file": "c-rep-start-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Так, что тут у нас?",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.314,
+   "bytes": 8543
+  },
+  "c-rep-start-3": {
+   "file": "c-rep-start-3.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Спокойно, сейчас починим.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.305,
+   "bytes": 14471
+  },
+  "c-rep-start-4": {
+   "file": "c-rep-start-4.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Мих+алыч, я с тобой!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.334,
+   "bytes": 8699
+  },
+  "c-rep-start-5": {
+   "file": "c-rep-start-5.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Ключ на семнадцать, вот.",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.225,
+   "bytes": 8075
+  },
+  "c-rep-done-1": {
+   "file": "c-rep-done-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Готово! Заводи!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.981,
+   "bytes": 12599
+  },
+  "c-rep-done-2": {
+   "file": "c-rep-done-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Принимай машину!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.478,
+   "bytes": 9635
+  },
+  "c-rep-done-3": {
+   "file": "c-rep-done-3.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Как новенький!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 0.733,
+   "bytes": 5111
+  },
+  "c-thanks-1": {
+   "file": "c-thanks-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Спасибо, мужики!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.015,
+   "bytes": 6827
+  },
+  "c-thanks-2": {
+   "file": "c-thanks-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Вот это скорость!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 0.986,
+   "bytes": 6671
+  },
+  "c-thanks-3": {
+   "file": "c-thanks-3.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Золотые руки!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 0.929,
+   "bytes": 6359
+  },
+  "c-thanks-crn-1": {
+   "file": "c-thanks-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Спасибо, мальчики! Поехали!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.188,
+   "bytes": 13847
+  },
+  "c-wait-1": {
+   "file": "c-wait-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Ну где же сл+есарь?",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.093,
+   "bytes": 7295
+  },
+  "c-wait-2": {
+   "file": "c-wait-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Час уже стою, а время, деньги!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.598,
+   "bytes": 10259
+  },
+  "c-wait-3": {
+   "file": "c-wait-3.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Эй, про меня не забыли?",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.264,
+   "bytes": 8231
+  },
+  "c-wait-crn-1": {
+   "file": "c-wait-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Мальчики, я всё ещё жду!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.799,
+   "bytes": 11507
+  },
+  "c-over-1": {
+   "file": "c-over-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Наконец-то!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 0.769,
+   "bytes": 5267
+  },
+  "c-over-2": {
+   "file": "c-over-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Ура, мой черёд!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 0.862,
+   "bytes": 5891
+  },
+  "c-rant-1": {
+   "file": "c-rant-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Что-то много машин стоит!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.928,
+   "bytes": 12287
+  },
+  "c-rant-2": {
+   "file": "c-rant-2.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Каждый час прост+оя, это рубли!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.21,
+   "bytes": 14003
+  },
+  "c-rant-3": {
+   "file": "c-rant-3.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Сл+есари, вы где? Очередь растёт!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.728,
+   "bytes": 16967
+  },
+  "c-solo-1": {
+   "file": "c-solo-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Я один, а машин двадцать!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.339,
+   "bytes": 14783
+  },
+  "c-solo-2": {
+   "file": "c-solo-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Эх, был бы напарник…",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.938,
+   "bytes": 12287
+  },
+  "c-solo-3": {
+   "file": "c-solo-3.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Не разорваться же мне!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.666,
+   "bytes": 10727
+  },
+  "c-switch-1": {
+   "file": "c-switch-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Бросай, идём к крану!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.037,
+   "bytes": 12911
+  },
+  "c-shift-start-1": {
+   "file": "c-shift-start-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Доброе утро! За работу!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.994,
+   "bytes": 12599
+  },
+  "c-shift-end-1": {
+   "file": "c-shift-end-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Смена окончена, все молодцы!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.452,
+   "bytes": 15407
+  },
+  "c-edition-1": {
+   "file": "c-edition-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Так, работаем культурно.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.734,
+   "bytes": 11039
+  },
+  "c-fire-boss-1": {
+   "file": "c-fire-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Серёга, ты уволен. Экономим на зарплате.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.116,
+   "bytes": 19307
+  },
+  "c-fire-shock-1": {
+   "file": "c-fire-shock-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Меня? Уволить?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.48,
+   "bytes": 9635
+  },
+  "c-fire-r6-1": {
+   "file": "c-fire-r6-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Жаль. Без тебя будет тяжело.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.663,
+   "bytes": 16655
+  },
+  "c-fire-sad-1": {
+   "file": "c-fire-sad-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Ну что ж, раз так решили…",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.448,
+   "bytes": 9323
+  },
+  "c-fire-bye-1": {
+   "file": "c-fire-bye-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Мих+алыч, удачи! Береги ключи.",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 2.047,
+   "bytes": 12911
+  },
+  "c-fire-after-1": {
+   "file": "c-fire-after-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Ну что ж, буду один.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.842,
+   "bytes": 11819
+  },
+  "c-ret-boss-1": {
+   "file": "c-ret-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Серёга, возвращайся! Посчитали, без тебя дороже.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.693,
+   "bytes": 22739
+  },
+  "c-ret-hello-1": {
+   "file": "c-ret-hello-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Я вернулся! Скучали?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.606,
+   "bytes": 10259
+  },
+  "c-ret-r6-1": {
+   "file": "c-ret-r6-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Наконец-то! Бери ключ, работы много.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 3.727,
+   "bytes": 23051
+  },
+  "c-ret-go-1": {
+   "file": "c-ret-go-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "За работу!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 0.659,
+   "bytes": 4643
+  },
+  "c-stay-r3-1": {
+   "file": "c-stay-r3-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Ой, так я остаюсь?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.134,
+   "bytes": 7451
+  },
+  "c-stay-boss-1": {
+   "file": "c-stay-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Остаёшься, остаёшься. Пошутили.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.787,
+   "bytes": 17435
+  },
+  "a-brk-exc-1": {
+   "file": "a-brk-exc-1.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Ёлки-палки, рукав лопнул! Всё в масле!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 2.361,
+   "bytes": 14783
+  },
+  "a-brk-exc-2": {
+   "file": "a-brk-exc-2.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Ковш закл+инило, твою дивизию!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.622,
+   "bytes": 10415
+  },
+  "a-brk-exc-3": {
+   "file": "a-brk-exc-3.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Всё, гидравлике конец. Стою.",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.954,
+   "bytes": 12443
+  },
+  "a-brk-exc-4": {
+   "file": "a-brk-exc-4.mp3",
+   "role": "op.excavator",
+   "voice": "eugene",
+   "text": "Сл+есаря сюда, живо!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.189,
+   "bytes": 7919
+  },
+  "a-brk-bul-1": {
+   "file": "a-brk-bul-1.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Гусеница слетела, мать честная!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 2.562,
+   "bytes": 16031
+  },
+  "a-brk-bul-2": {
+   "file": "a-brk-bul-2.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Заглох, железяка дизельная!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 2.243,
+   "bytes": 14159
+  },
+  "a-brk-bul-3": {
+   "file": "a-brk-bul-3.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Отвал не поднимается, приехали!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 2.26,
+   "bytes": 14315
+  },
+  "a-brk-bul-4": {
+   "file": "a-brk-bul-4.mp3",
+   "role": "op.bulldozer",
+   "voice": "aidar",
+   "text": "Да чтоб тебя, опять ломаешься!",
+   "rate": "medium",
+   "pitch": "x-low",
+   "dur": 2.221,
+   "bytes": 14003
+  },
+  "a-brk-crn-1": {
+   "file": "a-brk-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Стоп-стоп! Лебёдка, зараза, не тянет!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.181,
+   "bytes": 19775
+  },
+  "a-brk-crn-2": {
+   "file": "a-brk-crn-2.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Груз висит, а кран встал. Приехали.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.051,
+   "bytes": 18995
+  },
+  "a-brk-crn-3": {
+   "file": "a-brk-crn-3.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Опора поехала! Все от крана!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.203,
+   "bytes": 13847
+  },
+  "a-brk-crn-4": {
+   "file": "a-brk-crn-4.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Корпус ждёт, а я стою. Красота!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.963,
+   "bytes": 18371
+  },
+  "a-brk-trk-1": {
+   "file": "a-brk-trk-1.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Колесо пробил, едрить-колотить!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.576,
+   "bytes": 10103
+  },
+  "a-brk-trk-2": {
+   "file": "a-brk-trk-2.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Кузов не поднимается, ерунда какая-то!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.931,
+   "bytes": 12287
+  },
+  "a-brk-trk-3": {
+   "file": "a-brk-trk-3.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Заглох посреди дороги, вот зараза!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.774,
+   "bytes": 11351
+  },
+  "a-brk-trk-4": {
+   "file": "a-brk-trk-4.mp3",
+   "role": "op.truck",
+   "voice": "eugene",
+   "text": "Опять двадцать пять, стартер!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.462,
+   "bytes": 9479
+  },
+  "a-rep-start-1": {
+   "file": "a-rep-start-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Ну чё вы тут наломали, а?",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.82,
+   "bytes": 11663
+  },
+  "a-rep-start-2": {
+   "file": "a-rep-start-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Отойди, дай гляну.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.838,
+   "bytes": 11663
+  },
+  "a-rep-start-3": {
+   "file": "a-rep-start-3.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Щас разберёмся. Не дрейфь.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.744,
+   "bytes": 17123
+  },
+  "a-rep-start-4": {
+   "file": "a-rep-start-4.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Мих+алыч, я ключи взял!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.538,
+   "bytes": 9947
+  },
+  "a-rep-start-5": {
+   "file": "a-rep-start-5.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Ёлки, тут всё в масле!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.278,
+   "bytes": 8387
+  },
+  "a-rep-done-1": {
+   "file": "a-rep-done-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Всё, готово. Заводи!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.389,
+   "bytes": 14939
+  },
+  "a-rep-done-2": {
+   "file": "a-rep-done-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Работает. И больше не ломай!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 3.343,
+   "bytes": 20711
+  },
+  "a-rep-done-3": {
+   "file": "a-rep-done-3.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Раз-два, и готово!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.084,
+   "bytes": 7139
+  },
+  "a-thanks-1": {
+   "file": "a-thanks-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Мих+алыч, ты волшебник!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.397,
+   "bytes": 9011
+  },
+  "a-thanks-2": {
+   "file": "a-thanks-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Ну ничего себе, работает!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.36,
+   "bytes": 8855
+  },
+  "a-thanks-3": {
+   "file": "a-thanks-3.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "С меня пиво, мужики!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.159,
+   "bytes": 7607
+  },
+  "a-thanks-crn-1": {
+   "file": "a-thanks-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Мальчики, вы лучшие! Поехали!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.312,
+   "bytes": 14627
+  },
+  "a-wait-1": {
+   "file": "a-wait-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Час стою! Где сл+есаря?",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.776,
+   "bytes": 10571
+  },
+  "a-wait-2": {
+   "file": "a-wait-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Эй, вы там уснули? Я жду!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 2.488,
+   "bytes": 15563
+  },
+  "a-wait-3": {
+   "file": "a-wait-3.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Сижу, курю, баклуши бью.",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.414,
+   "bytes": 9167
+  },
+  "a-wait-crn-1": {
+   "file": "a-wait-crn-1.mp3",
+   "role": "op.crane",
+   "voice": "xenia",
+   "text": "Мальчики, я тут до ночи стоять буду?",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.518,
+   "bytes": 15719
+  },
+  "a-over-1": {
+   "file": "a-over-1.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Ну наконец-то, дождался!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.347,
+   "bytes": 8855
+  },
+  "a-over-2": {
+   "file": "a-over-2.mp3",
+   "role": "op",
+   "voice": "eugene",
+   "text": "Слава богу, про меня вспомнили!",
+   "rate": "medium",
+   "pitch": "low",
+   "dur": 1.602,
+   "bytes": 10259
+  },
+  "a-rant-1": {
+   "file": "a-rant-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Это что за безобразие? Полплощадки стоит!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.137,
+   "bytes": 19463
+  },
+  "a-rant-2": {
+   "file": "a-rant-2.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Бригада, а ну шевелись!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 1.798,
+   "bytes": 11507
+  },
+  "a-rant-3": {
+   "file": "a-rant-3.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Каждый час прост+оя, деньги на ветер!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.526,
+   "bytes": 15875
+  },
+  "a-solo-1": {
+   "file": "a-solo-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Я один, а их двадцать!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.073,
+   "bytes": 13067
+  },
+  "a-solo-2": {
+   "file": "a-solo-2.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Зачем Серёгу уволили?!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 1.967,
+   "bytes": 12443
+  },
+  "a-solo-3": {
+   "file": "a-solo-3.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Экономисты, сами бы чинили.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.613,
+   "bytes": 16343
+  },
+  "a-switch-1": {
+   "file": "a-switch-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Бросай всё, к крану бегом!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.293,
+   "bytes": 14471
+  },
+  "a-shift-start-1": {
+   "file": "a-shift-start-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Подъём, мужики, смена пошла!",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.231,
+   "bytes": 14003
+  },
+  "a-shift-end-1": {
+   "file": "a-shift-end-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Шаб+аш, мужики! Всё, по домам.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.717,
+   "bytes": 16967
+  },
+  "a-edition-1": {
+   "file": "a-edition-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Так, мужики, теперь всё по-настоящему.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.858,
+   "bytes": 17747
+  },
+  "a-fire-boss-1": {
+   "file": "a-fire-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Серёга, ты уволен. Экономия.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.51,
+   "bytes": 15719
+  },
+  "a-fire-shock-1": {
+   "file": "a-fire-shock-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Чего?! Вы там совсем с ума сошли?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 2.299,
+   "bytes": 13691
+  },
+  "a-fire-r6-1": {
+   "file": "a-fire-r6-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "И как я один на двадцать машин?",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.528,
+   "bytes": 15875
+  },
+  "a-fire-rage-1": {
+   "file": "a-fire-rage-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Да ну вас с вашей экономией! Нате каску!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 2.233,
+   "bytes": 14003
+  },
+  "a-fire-bye-1": {
+   "file": "a-fire-bye-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Мих+алыч, держись. А вы без меня ещё взвоете!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 3.334,
+   "bytes": 20711
+  },
+  "a-fire-after-1": {
+   "file": "a-fire-after-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Справимся, ага. Как же.",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 2.488,
+   "bytes": 15563
+  },
+  "a-ret-boss-1": {
+   "file": "a-ret-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Серёга, вернись! Посчитали, без тебя никак.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 3.332,
+   "bytes": 20711
+  },
+  "a-ret-hello-1": {
+   "file": "a-ret-hello-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Ну что, без меня никак?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.337,
+   "bytes": 8699
+  },
+  "a-ret-helmet-1": {
+   "file": "a-ret-helmet-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Каску мою не утащили?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 1.349,
+   "bytes": 8855
+  },
+  "a-ret-r6-1": {
+   "file": "a-ret-r6-1.mp3",
+   "role": "w6",
+   "voice": "aidar",
+   "text": "Серёга! Слава богу! Бери ключ!",
+   "rate": "slow",
+   "pitch": "low",
+   "dur": 3.599,
+   "bytes": 22271
+  },
+  "a-ret-go-1": {
+   "file": "a-ret-go-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Погнали!",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 0.572,
+   "bytes": 4175
+  },
+  "a-stay-r3-1": {
+   "file": "a-stay-r3-1.mp3",
+   "role": "w3",
+   "voice": "eugene",
+   "text": "Чё, передумали?",
+   "rate": "medium",
+   "pitch": "high",
+   "dur": 0.929,
+   "bytes": 6359
+  },
+  "a-stay-boss-1": {
+   "file": "a-stay-boss-1.mp3",
+   "role": "foreman",
+   "voice": "aidar",
+   "text": "Остаёшься, остаёшься. Работай.",
+   "rate": "medium",
+   "pitch": "medium",
+   "dur": 2.741,
+   "bytes": 17123
+  }
+ }
 }

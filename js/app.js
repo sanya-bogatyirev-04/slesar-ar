@@ -3,6 +3,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Model, DEFAULT_CONFIG, STRATEGIES, validate } from "./model.js";
 import { Site, labelSprite, CLASSIC_KIT } from "./scene.js";
 import { World } from "./world.js";
+import { loadTarget, prepareAR, withDeadline } from "./ar-session.js";
 import { AudioEngine } from "./audio.js";
 import { Voice } from "./voice.js";
 import { Bubbles } from "./bubbles.js";
@@ -32,6 +33,7 @@ const state = {
   discipline: "fifo",
   mode: "team",            // team | solo | both
   view: null,              // ar | 3d
+  tracking: false,
   speed: 1,
   paused: false,
   between: 0,              // пауза между сменами, с
@@ -192,8 +194,19 @@ let stopView = () => {};
 
 async function start3D() {
   state.view = "3d";
+  state.tracking = true;
+  director.setTracking(true);
   const stage = $("#stage");
   const renderer = new THREE.WebGLRenderer({ antialias: true });
+  let controls, resizeObserver, onResize;
+  stopView = () => {
+    renderer.setAnimationLoop(null);
+    controls?.dispose();
+    resizeObserver?.disconnect();
+    if (onResize) removeEventListener("resize", onResize);
+    renderer.dispose();
+    renderer.domElement.remove();
+  };
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
   stage.appendChild(renderer.domElement);
@@ -230,10 +243,11 @@ async function start3D() {
   // табло меняет высоту (другие числа, «Два мира») — сдвигаем кадр, не трогая поворот камеры
   if (window.ResizeObserver) {
     let lastH = 0;
-    new ResizeObserver(() => {
+    resizeObserver = new ResizeObserver(() => {
       const hh = Math.round($("#hud").offsetHeight + $("#bar").offsetHeight);
       if (Math.abs(hh - lastH) > 6) { lastH = hh; applyOffset(); }
-    }).observe($("#hud"));
+    });
+    resizeObserver.observe($("#hud"));
   }
   state.refit = fit;
   Object.assign(state, { scene, renderer, camera });
@@ -244,12 +258,12 @@ async function start3D() {
   ground.position.y = -0.013;
   scene.add(ground);
   scene.add(state.root);
-  const controls = new OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.maxPolarAngle = Math.PI / 2.15;
   controls.minDistance = 0.25;
   controls.maxDistance = 3;
-  const onResize = () => {
+  onResize = () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
@@ -265,19 +279,34 @@ async function start3D() {
     controls.update();
     renderer.render(scene, camera);
   });
-  stopView = () => { renderer.setAnimationLoop(null); renderer.dispose(); removeEventListener("resize", onResize); };
 }
 
 async function startAR() {
+  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+    throw new Error("Для камеры откройте сайт по HTTPS в Safari или Chrome");
+  }
   state.view = "ar";
-  const { MindARThree } = await import("https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js");
-  const mindar = new MindARThree({
+  state.tracking = false;
+  const [ { MindARThree }, { Controller }, targetBuffer ] = await withDeadline(Promise.all([
+    import("../vendor/mindar/mindar-image-three.prod.js"),
+    import("../vendor/mindar/mindar-image.prod.js"),
+    loadTarget("assets/marker.mind"),
+  ]), 30000, "Не удалось загрузить AR. Проверьте соединение с интернетом");
+  // The library registers resize in its constructor, before a controller exists.
+  class SafeMindARThree extends MindARThree {
+    resize() {
+      if (!this._closed && this.controller && this.video?.videoWidth) super.resize();
+    }
+  }
+  const mindar = new SafeMindARThree({
     container: $("#stage"),
     imageTargetSrc: "assets/marker.mind",
     uiLoading: "no", uiScanning: "no", uiError: "no",
     filterMinCF: 0.0001, filterBeta: 0.001,
   });
+  stopView = prepareAR(mindar, Controller, targetBuffer);
   const { renderer, scene, camera } = mindar;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   Object.assign(state, { scene, renderer, camera });
   addLights(scene, renderer);
   const anchor = mindar.addAnchor(0);
@@ -285,19 +314,18 @@ async function startAR() {
   holder.rotation.x = Math.PI / 2;            // внутренние координаты (y вверх) → плоскость метки
   holder.add(state.root);
   anchor.group.add(holder);
-  anchor.onTargetFound = () => { $("#scan").classList.add("hidden"); director.setTracking(true); };
-  anchor.onTargetLost = () => { $("#scan").classList.remove("hidden"); director.setTracking(false); };
+  anchor.onTargetFound = () => { state.tracking = true; $("#scan").classList.add("hidden"); director.setTracking(true); };
+  anchor.onTargetLost = () => { state.tracking = false; $("#scan").classList.remove("hidden"); director.setTracking(false); };
   director.setView({ camera, canvas: renderer.domElement, isVisible: () => anchor.group.visible });
   director.setTracking(false);                 // до первого обнаружения метки — тишина в репликах
   buildWorlds();
   $("#scan").classList.remove("hidden");
-  await mindar.start();
+  await withDeadline(mindar.start(), 60000, "Камера не запустилась. Проверьте разрешение на доступ к камере");
   const clock = new THREE.Clock();
   renderer.setAnimationLoop(() => {
     tick(Math.min(clock.getDelta(), 0.1));
     renderer.render(scene, camera);
   });
-  stopView = () => { renderer.setAnimationLoop(null); mindar.stop(); };
 }
 
 // ---------------------------------------------------------------------------
@@ -305,7 +333,9 @@ async function startAR() {
 // ---------------------------------------------------------------------------
 let hudTimer = 0;
 tick = (dt) => {
-  if (!state.paused) {
+  const paused = state.paused || document.hidden || (state.view === "ar" && !state.tracking);
+  if (director && director.paused !== paused) director.setPaused(paused);
+  if (!paused) {
     if (state.between > 0) {
       state.between -= dt;
       if (state.between <= 0) state.worlds.forEach((w) => w.startDay());
@@ -317,9 +347,9 @@ tick = (dt) => {
   }
   for (const w of state.worlds) {
     w.site.walkScale = Math.max(1, SPEEDS[state.speed].h / 0.33);
-    w.site.update(state.paused ? 0 : dt);
+    w.site.update(paused ? 0 : dt);
   }
-  director?.update(dt, { paused: state.paused, hoursPerSec: SPEEDS[state.speed].h });
+  director?.update(dt, { paused, hoursPerSec: SPEEDS[state.speed].h });
   hudTimer -= dt;
   if (hudTimer <= 0) { hudTimer = 0.12; renderHud(); }
   if (DEBUG) debugOverlay(dt);
@@ -480,13 +510,23 @@ async function openVerdict() {
   if (lastVerdict || verdictBusy) return;
   verdictBusy = true;
   body.innerHTML = `<p class="hint">Моделирую ${num(state.cfg.sim_days, 0)} рабочих дней для каждой из ${STRATEGIES.length} стратегий и решаю уравнения Колмогорова…</p><div class="progress"><i id="vp"></i></div><p class="hint" id="vp-text"></p>`;
-  const res = await model.runAll(state.cfg.sim_days, state.cfg.seed || 2026, (i, n, s) => {
-    $("#vp").style.width = `${(100 * i) / n}%`;
-    if (s) $("#vp-text").textContent = s.title;
-  });
-  verdictBusy = false;
-  lastVerdict = res;
-  body.innerHTML = verdictHTML(res);
+  const calculationModel = model;
+  try {
+    const res = await calculationModel.runAll(state.cfg.sim_days, state.cfg.seed || 2026, (i, n, s) => {
+      const progress = $("#vp"), text = $("#vp-text");
+      if (progress) progress.style.width = `${(100 * i) / n}%`;
+      if (s && text) text.textContent = s.title;
+    });
+    if (calculationModel !== model) {
+      body.textContent = "Данные изменились во время расчёта. Закройте панель и нажмите «Вердикт» ещё раз.";
+      return;
+    }
+    lastVerdict = res;
+    body.innerHTML = verdictHTML(res);
+  } catch (e) {
+    console.error(e);
+    body.textContent = "Расчёт не завершён. Закройте панель и повторите попытку.";
+  } finally { verdictBusy = false; }
 }
 
 function verdictHTML(res) {
@@ -563,7 +603,7 @@ async function loadKit(ed) {
 
 async function enter(view) {
   state.edition = getEdition();
-  try { state.kit = await loadKit(state.edition); }
+  try { state.kit = await withDeadline(loadKit(state.edition), 20000, "Не удалось загрузить модели"); }
   catch (e) { console.error(e); state.edition = "classic"; state.kit = CLASSIC_KIT; setEdition("classic"); toast("Не удалось загрузить режим «Для опытных»", 3000); }
   director = new Director({ audio, voice, bubbles, edition: state.edition });
   audio.setSet(EDITION_CFG[state.edition].sfxSet);
@@ -575,8 +615,8 @@ async function enter(view) {
     if (view === "ar") await startAR();
     else await start3D();
   } catch (e) {
-    console.error(e);
-    if (view !== "ar") { toast("Не удалось запустить 3D 😕<br>" + e.message, 6000); return; }
+    if (view !== "ar") throw e;
+    console.warn("AR:", e?.message || "Нет доступа к камере");
     stopView();
     $("#stage").innerHTML = "";
     $("#scan").classList.add("hidden");
@@ -586,10 +626,29 @@ async function enter(view) {
 }
 
 // разблокировка звука и речи — СИНХРОННО в обработчике нажатия, до любого await (iOS)
-function launch(view) {
-  audio.unlockSync();
-  voice.unlockSync();
-  enter(view);
+let launching = false;
+async function launch(view) {
+  if (launching || state.view) return;
+  launching = true;
+  $("#btn-ar").disabled = $("#btn-3d").disabled = true;
+  try {
+    audio.unlockSync();
+    voice.unlockSync();
+    await enter(view);
+  }
+  catch (e) {
+    console.error(e);
+    stopView();
+    state.view = null;
+    $("#stage").replaceChildren();
+    $("#start").classList.remove("hidden");
+    $("#hud").classList.add("hidden");
+    $("#bar").classList.add("hidden");
+    toast("Не удалось запустить площадку. Обновите страницу и повторите попытку.", 5000);
+  } finally {
+    launching = false;
+    $("#btn-ar").disabled = $("#btn-3d").disabled = false;
+  }
 }
 $("#btn-ar").onclick = () => launch("ar");
 $("#btn-3d").onclick = () => launch("3d");
@@ -623,7 +682,7 @@ async function applyEdition(ed) {
   setTogglesDisabled(true);
   toast("Переключаю…", 1200);
   let kit;
-  try { kit = await loadKit(ed); }
+  try { kit = await withDeadline(loadKit(ed), 20000, "Не удалось загрузить модели"); }
   catch (e) {
     console.error(e);
     setTogglesDisabled(false);

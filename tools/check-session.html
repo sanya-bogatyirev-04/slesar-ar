@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8"><title>Проверка жизненного цикла AR</title>
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js"}}</script>
+<pre id="out">Проверка…</pre>
+<script type="module">
+import * as THREE from 'three';
+import {prepareAR,withDeadline} from '../js/ar-session.js';
+const out=document.querySelector('#out'),results=[];
+function assert(value,name){results.push(`${value?'OK':'FAIL'} ${name}`);if(!value)throw new Error(name);}
+let events=[],stopped=0,terminated=0,late;
+const anchor={targetIndex:0,visible:false,group:new THREE.Group(),onTargetFound:()=>events.push('found'),onTargetLost:()=>events.push('lost')};
+const video={videoWidth:640,videoHeight:480,srcObject:{getTracks:()=>[{stop:()=>stopped++}]},addEventListener:(_,cb)=>late=cb,pause(){},remove(){}};
+const m={video,anchors:[anchor],resize(){},renderer:{setAnimationLoop(){},dispose(){},domElement:{remove(){}}},cssRenderer:{domElement:{remove(){}}}};
+class Controller {
+  constructor(opts){this.opts=opts;this.worker={terminate:()=>terminated++};}
+  addImageTargetsFromBuffer(){return {dimensions:[[2048,1448]]};}
+  dummyRun(){} processVideo(){} stopProcessVideo(){}
+}
+try{
+  const cleanup=prepareAR(m,Controller,new ArrayBuffer(0));
+  await m._startAR();
+  const emit=matrix=>m.controller.opts.onUpdate({type:'updateMatrix',targetIndex:0,worldMatrix:matrix});
+  const identity=new THREE.Matrix4().toArray();emit(identity);
+  assert(anchor.group.visible && events.join(',')==='found','появление моделей при обнаружении');
+  assert(anchor.group.matrix.elements[12]===1024 && anchor.group.matrix.elements[13]===724,'центр и масштаб схемы');
+  emit(null);assert(!anchor.group.visible && events.at(-1)==='lost','скрытие при потере метки');
+  emit(identity);assert(anchor.group.visible && events.join(',')==='found,lost,found','повторное обнаружение');
+  cleanup();cleanup();assert(stopped===1 && terminated===1,'камера и worker освобождены один раз');
+  m.video.srcObject={getTracks:()=>[{stop:()=>stopped++}]};late();assert(stopped===2,'позднее разрешение камеры не оставляет поток');
+  emit(null);assert(anchor.group.visible,'после остановки события игнорируются');
+  let timedOut=false;try{await withDeadline(new Promise(()=>{}),10,'timeout');}catch(e){timedOut=e.message==='timeout';}
+  assert(timedOut,'тайм-аут не зависает');
+  class BadController extends Controller{addImageTargetsFromBuffer(){throw new Error('bad target');}}
+  const other={...m,video:{...video,srcObject:null},_closed:false};
+  const stop=prepareAR(other,BadController,new ArrayBuffer(0));
+  let rejected=false;try{await other._startAR();}catch(e){rejected=e.message==='bad target';}finally{stop();}
+  assert(rejected,'ошибка файла метки отклоняет запуск');
+  results.push('AR SESSION OK');
+}catch(e){results.push('ERROR '+e.message);}
+out.textContent=results.join('\n');
+</script>
+</html>

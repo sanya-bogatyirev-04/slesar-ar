@@ -21,6 +21,12 @@
     lines.push(`${pass ? "OK  " : "FAIL"} ${s.key.padEnd(11)} JS=${js.toFixed(0)} PY=${PY[s.key]}  MC=${r.sim.lossMean.toFixed(0)}±${r.sim.lossCI.toFixed(0)}`);
   }
   lines.push(`delta=${res.main.delta.toFixed(0)} руб/день, fire=${res.main.fire}, ${(performance.now() - t0).toFixed(0)} мс`);
+  const emptyConfig = structuredClone(DEFAULT_CONFIG);
+  emptyConfig.machines.forEach((machine) => machine.count = 0);
+  const empty = await new Model(emptyConfig).runAll(10, 2026);
+  const emptyOK = Object.values(empty.results).every((r) => Number.isFinite(r.econ.result) && r.econ.lost === 0) && empty.main.fire && empty.prio.fire;
+  ok &&= emptyOK;
+  lines.push(`${emptyOK ? "OK" : "FAIL"} пустой парк: конечные результаты, экономия зарплаты 960 ₽/день`);
   lines.push(ok ? "ALL OK" : "MISMATCH");
   document.getElementById("out").textContent = lines.join("\n");
   window.__done = lines.join("\n");

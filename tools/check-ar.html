@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Проверка распознавания метки</title>
+<style>body{font:16px system-ui;max-width:900px;margin:24px auto;padding:16px}canvas{width:100%;max-width:640px}pre{white-space:pre-wrap}</style>
+<h1>Проверка распознавания схемы</h1>
+<p>Настоящий детектор MindAR проверяет файл marker.mind на изображении marker.png.
+Камера не используется. Это проверка метки, а не проверка камеры телефона.</p>
+<canvas id="frame" width="960" height="720"></canvas>
+<pre id="result">Загрузка…</pre>
+<script type="module">
+const out = document.querySelector('#result'), canvas = document.querySelector('canvas');
+const log = (s) => { out.textContent += '\n' + s; };
+let controller;
+try {
+  const { Controller } = await import('../vendor/mindar/mindar-image.prod.js');
+  const image = new Image(); image.src = '../assets/marker.png'; await image.decode();
+  const response = await fetch('../assets/marker.mind');
+  if (!response.ok) throw new Error('marker.mind: ' + response.status);
+  controller = new Controller({inputWidth:960,inputHeight:720});
+  const {dimensions} = controller.addImageTargetsFromBuffer(await response.arrayBuffer());
+  if (dimensions.length !== 1 || dimensions[0][0] !== image.width || dimensions[0][1] !== image.height) throw new Error('Размеры метки и изображения различаются');
+  out.textContent = `Размеры совпадают: ${image.width} × ${image.height}`;
+  const ctx = canvas.getContext('2d');
+  let ok = true;
+  for (const [name, scale, angle] of [['Прямо', .8, 0], ['Поворот +12°', .7, 12], ['Поворот −15°', .65, -15]]) {
+    ctx.fillStyle = '#b4b4b4';ctx.fillRect(0,0,960,720);
+    ctx.save();ctx.translate(480,360);ctx.rotate(angle*Math.PI/180);
+    const width=960*scale,height=width*image.height/image.width;
+    ctx.drawImage(image,-width/2,-height/2,width,height);ctx.restore();
+    const {featurePoints} = await controller.detect(canvas);
+    const {modelViewTransform} = await controller.match(featurePoints,0);
+    const pass=!!modelViewTransform && modelViewTransform.flat().every(Number.isFinite);
+    ok &&=pass;log(`${pass?'OK':'FAIL'} ${name}: найдено признаков ${featurePoints.length}`);
+  }
+  // Exercise tracking, including losing the target and finding it again.
+  const drawTarget = () => {
+    ctx.fillStyle='#b4b4b4';ctx.fillRect(0,0,960,720);
+    ctx.drawImage(image,96,88,768,768*image.height/image.width);
+  };
+  controller.warmupTolerance=1;controller.missTolerance=2;
+  const tracked = await new Promise((resolve,reject) => {
+    let phase=0;
+    const timeout=setTimeout(()=>{controller.stopProcessVideo();reject(new Error('Тайм-аут отслеживания метки'));},60000);
+    controller.onUpdate=({type,worldMatrix})=>{
+      if(type!=='updateMatrix')return;
+      if(phase===0 && worldMatrix){
+        log('OK Отслеживание: метка найдена');phase=1;
+        ctx.fillStyle='#b4b4b4';ctx.fillRect(0,0,960,720);
+      } else if(phase===1 && worldMatrix===null){
+        log('OK Отслеживание: потеря метки');phase=2;drawTarget();
+      } else if(phase===2 && worldMatrix){
+        log('OK Отслеживание: повторное обнаружение');phase=3;
+        controller.stopProcessVideo();clearTimeout(timeout);resolve(true);
+      }
+    };
+    drawTarget();controller.processVideo(canvas);
+  });
+  ok &&=tracked;
+  log(ok?'AR MARKER OK':'AR MARKER FAIL');
+} catch(e) {log('ERROR: '+e.message);}
+finally {controller?.worker?.terminate();}
+</script>
+</html>

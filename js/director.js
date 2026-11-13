@@ -107,6 +107,7 @@ export class Director {
     if (!found) { this.voice.cancelAll(); this.bubbles.clear(); }
   }
   setPaused(b) {
+    if (this.paused === b) return;
     this.paused = b;
     this.audio.setPaused(b);
     if (b) { this.voice.cancelAll(); this.bubbles.clear(); }

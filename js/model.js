@@ -237,6 +237,7 @@ export class Model {
     }
     let lam = 0;
     for (const e of exitRate) lam = Math.max(lam, e);
+    if (lam === 0) return { idle: new Array(K).fill(0), lossMean: 0, states: n };
     lam *= 1.0001;
     const pr = Float64Array.from(rate, (r) => r / lam);
     const stay = Float64Array.from(exitRate, (e) => 1 - e / lam);

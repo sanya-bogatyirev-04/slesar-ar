@@ -149,3 +149,15 @@ Rudmer_Rotteveel, domiscz, BenDrain, radwoc, ReadeOnly. Подробности �
 * `tools/` — генерация метки, листа для печати, компиляция метки, `make_voices_silero.py` — запись озвучки (Silero), `make_voices.ps1` — запасной вариант голосами Windows
 
 Технологии: three.js, MindAR (распознавание картинки в браузере), без сборки и серверной части.
+
+
+## Две версии задания
+
+- [v1 — исходная модель](https://sanya-bogatyirev-04.github.io/slesar-ar/?version=v1): наработка бульдозера по заданию 6 ч.
+- [v2 — сравнение 6 / 5 / 4 ч](https://sanya-bogatyirev-04.github.io/slesar-ar/?version=v2): переключение наработки, таблица, графики и CSV; режим AR и 3D.
+
+Переключение версии есть на стартовом экране и в панели звука. Версия задания и оформление «Для опытных» выбираются независимо. Настройки каждой версии сохраняются отдельно. В v2 расчёт выполняется в Web Worker, во время просмотра смена и речь приостанавливаются.
+
+[Расчёт и пояснения](ASSIGNMENT_V2.md) · [Таблица CSV](results/comparison-v2.csv) · [График отказов](results/failures-v2.svg) · [График экономики](results/economics-v2.svg).
+
+Проверка: `node tools/check-study.mjs`. Генерация отчётных данных: `node tools/generate-study.mjs` (20 000 смен, FIFO, seed 2026). Браузерная проверка: установить Playwright или задать `PLAYWRIGHT_MODULE`, запустить локальный сервер на 8768 и выполнить `node tools/browser-study.cjs` (Chrome).

@@ -126,6 +126,7 @@ export class Model {
     const working = this.COUNT.map((c, t) => Array.from({ length: c }, (_, i) => i)); // номера внутри типа
     let queue = [];                   // {type, idx, t}
     const idle = new Array(K).fill(0);
+    const failures = new Array(K).fill(0);
     const busy = { 6: 0, 3: 0 };
     const lam = this.MTBF.map((m) => 1 / m);
     const log = trace ? [] : null;
@@ -159,6 +160,7 @@ export class Model {
           const k = Math.floor(rng() * working[i].length);
           const idx = working[i].splice(k, 1)[0];
           queue.push({ type: i, idx, t });
+          failures[i]++;
           if (trace) log.push({ t, kind: "break", type: i, idx });
           done = true;
         } else u -= rBreak[i];
@@ -176,7 +178,7 @@ export class Model {
         }
       }
     }
-    return { idle, busy, log };
+    return { idle, busy, log, failures };
   }
 
   simulate(s, days, seed) {

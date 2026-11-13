@@ -27,6 +27,7 @@ export class World {
     this.log = m.simulateDay(this.s, this.rng, true).log;
     this.ptr = 0;
     this.broken = new Array(m.K).fill(0);
+    this.failures = new Array(m.K).fill(0);
     this.money = { income: 0, loss: 0, staff: 0 };
     this.craneWork = 0;
     this.queueLen = 0;
@@ -57,7 +58,7 @@ export class World {
   }
 
   apply(ev) {
-    if (ev.kind === "break") { this.broken[ev.type]++; this.site.onBreak(ev.type, ev.idx); this.brokeAt.set(`${ev.type}:${ev.idx}`, { t: ev.t, told: false }); }
+    if (ev.kind === "break") { this.broken[ev.type]++; this.failures[ev.type]++; this.site.onBreak(ev.type, ev.idx); this.brokeAt.set(`${ev.type}:${ev.idx}`, { t: ev.t, told: false }); }
     else if (ev.kind === "fix") { this.broken[ev.type]--; this.site.onFix(ev.type, ev.idx); this.brokeAt.delete(`${ev.type}:${ev.idx}`); }
     else if (ev.kind === "alloc") { this.site.assign(ev.jobs); this.queueLen = ev.broken.length; }
     this.onEvent?.(ev, this);

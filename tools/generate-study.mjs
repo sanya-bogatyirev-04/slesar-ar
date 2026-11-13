@@ -1,0 +1,12 @@
+import fs from 'node:fs/promises';
+import { DEFAULT_CONFIG } from '../js/model.js';
+import { runStudy, studyCSV } from '../js/study.js';
+import { studyChart } from '../js/study-panel.js';
+const result = await runStudy(DEFAULT_CONFIG, {days:20000, seed:2026, discipline:'fifo'});
+const root = new URL('../results/', import.meta.url);
+await fs.mkdir(root,{recursive:true});
+await fs.writeFile(new URL('comparison-v2.json',root),JSON.stringify(result,null,2));
+await fs.writeFile(new URL('comparison-v2.csv',root),studyCSV(result));
+await fs.writeFile(new URL('failures-v2.svg',root),studyChart(result,'bulldozerFailures','Отказы бульдозеров за смену'));
+await fs.writeFile(new URL('economics-v2.svg',root),studyChart(result,'result','Экономический результат, ₽/смену'));
+console.log('Generated results: 20 000 shifts per scenario, seed 2026.');

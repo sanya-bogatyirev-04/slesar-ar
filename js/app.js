@@ -1,3 +1,5 @@
+import { studyConfig } from "./study.js";
+import { setupStudy } from "./study-panel.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { Model, DEFAULT_CONFIG, STRATEGIES, validate } from "./model.js";
@@ -16,7 +18,9 @@ const rub = (x) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).
 const num = (x, d = 1) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: d }).format(x);
 const KIND_NAMES = { excavator: "Экскаватор", bulldozer: "Бульдозер", crane: "Автокран", truck: "Самосвал" };
 const SPEEDS = [{ h: 0.15, label: "×½" }, { h: 0.33, label: "×1" }, { h: 0.8, label: "×2" }, { h: 2.0, label: "×6" }];
-const STORE_KEY = "slesar-ar-config-v1";
+const WORK_VERSION = new URLSearchParams(location.search).get("version") === "v2" ? "v2" : "v1";
+const STORE_KEY = "slesar-ar-config-" + WORK_VERSION;
+const defaultConfig = () => WORK_VERSION === "v2" ? studyConfig(DEFAULT_CONFIG, 5) : structuredClone(DEFAULT_CONFIG);
 const SOUND_KEY = "slesar-ar-sound-v1";
 const DEBUG = new URLSearchParams(location.search).has("debug");
 
@@ -69,9 +73,9 @@ let model = new Model(state.cfg);
 function loadConfig() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (raw) { const c = JSON.parse(raw); validate(c); return c; }
+    if (raw) { const c = JSON.parse(raw); validate(c); return WORK_VERSION === "v2" ? studyConfig(c, [6,5,4].includes(c.machines.find(m => m.kind === "bulldozer")?.mtbf) ? c.machines.find(m => m.kind === "bulldozer").mtbf : 5) : c; }
   } catch (e) { /* нет хранилища или битые данные — берём данные задания */ }
-  return structuredClone(DEFAULT_CONFIG);
+  return defaultConfig();
 }
 function saveConfig() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(state.cfg)); } catch (e) { /* не критично */ }
@@ -445,7 +449,7 @@ function renderDataForm() {
       <td data-label="Название"><input data-f="name" value="${val(m.name).replace(/"/g, "&quot;")}"></td>
       <td data-label="Вид на площадке"><select data-f="kind">${opt}</select></td>
       <td data-label="Количество, шт."><input data-f="count" type="number" inputmode="numeric" min="0" step="1" value="${val(m.count)}"></td>
-      <td data-label="Наработка, ч"><input data-f="mtbf" type="number" inputmode="decimal" min="0" step="0.1" value="${val(m.mtbf)}"></td>
+      <td data-label="Наработка, ч"><input data-f="mtbf" type="number" inputmode="decimal" min="0" step="0.1" value="${val(m.mtbf)}" ${WORK_VERSION === "v2" && m.kind === "bulldozer" ? 'readonly title="В v2 выберите 6, 5 или 4 ч в переключателе наработки"' : ""}></td>
       <td data-label="Доход, ₽/ч"><input data-f="income" type="number" inputmode="decimal" min="0" step="10" value="${val(m.income)}"></td>
       <td data-label="Ремонт 3-м, ч"><input data-f="repair_3" type="number" inputmode="decimal" min="0" step="0.05" value="${val(m.repair_3)}" placeholder="не чинит"></td>
       <td data-label="Ремонт 6-м, ч"><input data-f="repair_6" type="number" inputmode="decimal" min="0" step="0.05" value="${val(m.repair_6)}"></td>
@@ -466,13 +470,16 @@ $("#btn-add-type").onclick = () => {
   draft.machines.push({ name: "Новая машина", kind: "truck", count: 2, mtbf: 6, income: 500, repair_3: null, repair_6: 2, repair_both: 1 });
   renderDataForm();
 };
-$("#btn-reset").onclick = () => { draft = structuredClone(DEFAULT_CONFIG); $("#discipline").value = "fifo"; renderDataForm(); };
+$("#btn-reset").onclick = () => { draft = defaultConfig(); $("#discipline").value = "fifo"; renderDataForm(); };
 $("#btn-apply").onclick = () => {
   try {
+    if (WORK_VERSION === "v2") draft = studyConfig(draft, [6,5,4].includes(draft.machines.find(m => m.kind === "bulldozer")?.mtbf) ? draft.machines.find(m => m.kind === "bulldozer").mtbf : Number(document.querySelector("[data-study-time]").value));
     validate(draft);
     const total = draft.machines.reduce((a, m) => a + m.count, 0);
     if (total > 80) throw new Error("для наглядности на площадке — не больше 80 машин");
     state.cfg = draft;
+    syncStudyTime();
+    state.between = 0;
     state.discipline = $("#discipline").value;
     model = new Model(state.cfg);
     saveConfig();
@@ -665,6 +672,7 @@ $("#btn-verdict").onclick = openVerdict;
 function closePanel(p) {
   p.classList.add("hidden");
   if (p.id === "panel-verdict") releaseVerdict();
+  if (p.id === "panel-study") studyPanel.close();
 }
 document.querySelectorAll("[data-close]").forEach((b) => (b.onclick = () => closePanel(b.closest(".panel"))));
 document.querySelectorAll(".panel").forEach((p) => p.addEventListener("click", (e) => { if (e.target === p) closePanel(p); }));
@@ -784,3 +792,21 @@ document.addEventListener("visibilitychange", () => {
 // для отладки в консоли
 window.__app = { state, audio, voice, bubbles, tick: (dt) => tick(dt), get director() { return director; }, get renderer() { return state.renderer; }, get model() { return model; } };
 
+
+// Assignment versions are independent of the visual edition (classic / PRO).
+document.querySelectorAll('[data-work-version]').forEach(a => {
+  const u = new URL(location.href); u.searchParams.set('version', a.dataset.workVersion); a.href = u.href;
+  if (a.dataset.workVersion === WORK_VERSION) a.setAttribute('aria-current', 'page');
+});
+function syncStudyTime() {
+  document.querySelector('#study-live-time').textContent = `v2 · T = ${state.cfg.machines.find(m => m.kind === 'bulldozer')?.mtbf ?? 5} ч`;
+  document.querySelectorAll('[data-study-time]').forEach(el => el.value = state.cfg.machines.find(m => m.kind === 'bulldozer')?.mtbf ?? 5);
+}
+syncStudyTime();
+document.querySelectorAll('[data-study-time]').forEach(el => el.onchange = () => {
+  state.cfg = studyConfig(state.cfg, Number(el.value)); model = new Model(state.cfg);
+  state.between = 0; lastVerdict = null; saveConfig(); syncStudyTime();
+  if (state.view) buildWorlds();
+  toast('Наработка изменена — новая смена');
+});
+const studyPanel = setupStudy({getState: () => state, hold: holdForVerdict, release: releaseVerdict});
